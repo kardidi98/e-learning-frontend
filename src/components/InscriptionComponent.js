@@ -71,7 +71,7 @@ export default class Inscription extends React.Component{
                                 </div>
                             </div>
                                 <div className="form-group mt-3"  style={{textAlign: "center"}}>
-                                        <button type="submit" className="button button-contactForm boxed-btn">Soumettre</button>
+                                        <button type="submit" className="button button-contactForm boxed-btn">inscription</button>
                                 </div>
                             </form>
                         </div>
