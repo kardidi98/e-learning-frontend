@@ -13,6 +13,7 @@ import Login from './LoginComponent';
 import Inscription from './InscriptionComponent';
 import Enseignants from './EnseignantsComponent';
 import Footer from './FooterComponent';
+import Alert from 'react-s-alert';
 
 const mapStateToProps = state => {
     return {
@@ -21,14 +22,12 @@ const mapStateToProps = state => {
   }
 const mapDispatchToProps = dispatch => ({
     postUser: (email, password, role, nom, prenom, adresse, tel,image) => dispatch(postUser(email, password, role, nom, prenom, adresse, tel,image)),
-    resetUserForm: () => { dispatch(actions.reset('user'))}
+    resetUserForm: () => { dispatch(actions.reset('user'))},
+    resetUserLoginForm: () => { dispatch(actions.reset('login'))}
   });
 
  class Main extends Component {
-    constructor(props) {
-        super(props);
-    
-      }
+   
 
       
     render(){
@@ -37,8 +36,13 @@ const mapDispatchToProps = dispatch => ({
               <Inscription postUser={this.props.postUser} resetUserForm={this.props.resetUserForm}/>
             );
           };
+          const LogIn = () => {
+            return(
+              <Login  resetUserLoginForm={this.props.resetUserLoginForm}/>
+            );
+          };
          return (
-            <div>
+            <div >
                 <Header/>
                 <Switch >
                         <Route path="/accueil" exact component={Accueil}></Route>
@@ -48,9 +52,10 @@ const mapDispatchToProps = dispatch => ({
                         <Route path="/cours" exact component={Cours}></Route>
                         <Route path="/enseignants" exact component={Enseignants}></Route>
                         <Route path="/inscription" exact component={SignUp}></Route>
-                        <Route path="/connexion" exact component={Login}></Route>
+                        <Route path="/connexion" exact component={LogIn}></Route>
                         <Redirect to="/accueil"/>
                 </Switch>
+                <Alert stack={{limit: 3}} />
                 <Footer/>
             </div>
         );

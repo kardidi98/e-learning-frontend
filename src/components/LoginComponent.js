@@ -1,6 +1,20 @@
 import React from 'react';
+import { Control, Form, Errors} from 'react-redux-form';
 
 export default class Login extends React.Component{
+    constructor(props) {
+        super(props);
+               
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+
+    }
+    handleSubmit(values) {
+        
+        console.log(values);
+        this.props.resetUserLoginForm()
+        // event.preventDefault();
+    }
     render(){
         return(
             <main>
@@ -25,26 +39,33 @@ export default class Login extends React.Component{
                             <h2 className="contact-title" align="center">Formulaire de connexion</h2>
                         </div>
                         <div className="col-lg-12">
-                            <form className="form-contact contact_form"  method="post" id="contactForm" >
+                            <Form className="form-contact form_form" model="login"
+                                onSubmit={(values) => this.handleSubmit(values)}>
                                 <div className="row">
                                     
                                     <div className="col-sm-12">
                                         <div className="form-group">
-                                            <input className="form-control valid" name="email" id="email" type="email"  placeholder="Email"/>
+                                            <Control.text className="form-control "  model=".email"
+                                            name="email" id="email" type="email"  placeholder="Email"
+                                            required/>
+                                        
                                         </div>
                                        
                                         
                                     </div>
                                     <div className="col-sm-12">
-                                       <div className="form-group">
-                                            <input className="form-control valid" name="password" id="password" type="password"  placeholder="Mot de passe"/>
+                                        <div className="form-group">
+                                            <Control.text className="form-control "  model=".password"
+                                            name="password" id="password" type="password"  placeholder="Mot de passe"
+                                            required/>
+                                        
                                         </div>
                                     </div>
                                 </div>
                                 <div className="form-group mt-3"  style={{textAlign: "center"}}>
                                     <button type="submit" className="button button-contactForm boxed-btn">connexion</button>
                                 </div>
-                            </form>
+                            </Form>
                         </div>
                         
                     </div>
