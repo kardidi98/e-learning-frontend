@@ -18,7 +18,8 @@ export default class Inscription extends React.Component{
         
         this.props.postUser(values.email, values.password,
             values.role, values.nom, values.prenom, values.adresse,
-             values.tel, values.image,{...this.props});
+             values.tel, values.image);
+        
         this.props.resetUserForm();
         
         // event.preventDefault();
@@ -49,7 +50,7 @@ export default class Inscription extends React.Component{
                         </div>
                         <div className="col-lg-12">
                             <Form className="form-contact form_form" model="user"
-                                onSubmit={(values) => this.handleSubmit(values)} id="SignUpForm" >
+                                onSubmit={(values) => this.handleSubmit(values)} id="SignUpForm" encType="multipart/form-data">
                                 <div className="row">
                                     <div className="col-sm-6">
                                         <div className="form-group">
@@ -122,7 +123,7 @@ export default class Inscription extends React.Component{
                                                     </div>
                                                 </label>
                                                 <Control.file className="form-control " model=".image"
-                                                name="image" id="image" type="file"  placeholder="Image" hidden="true"/>
+                                                name="image" id="image" type="file" accept="image/*"  placeholder="Image" hidden="true"/>
                                             </div>
                                     </div>
                                     

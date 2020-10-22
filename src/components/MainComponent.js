@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postUser } from '../redux/ActionCreators';
+import { postUser,loginUser } from '../redux/ActionCreators';
 import { actions } from 'react-redux-form';
 import Header from './HeaderComponent';
 import Accueil from './AccueilComponent';
@@ -23,6 +23,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     postUser: (email, password, role, nom, prenom, adresse, tel,image) => dispatch(postUser(email, password, role, nom, prenom, adresse, tel,image)),
     resetUserForm: () => { dispatch(actions.reset('user'))},
+    loginUser: (email, password) => dispatch(loginUser(email, password)),
     resetUserLoginForm: () => { dispatch(actions.reset('login'))}
   });
 
@@ -38,7 +39,7 @@ const mapDispatchToProps = dispatch => ({
           };
           const LogIn = () => {
             return(
-              <Login  resetUserLoginForm={this.props.resetUserLoginForm}/>
+              <Login loginUser={this.props.loginUser}  resetUserLoginForm={this.props.resetUserLoginForm}/>
             );
           };
          return (
