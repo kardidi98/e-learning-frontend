@@ -19,13 +19,16 @@ export default class Header extends React.Component {
                 username : localStorage.getItem("username"),
                 authority : localStorage.getItem("authority")
             })
+          
         }
+
     }
     logOut(){
         this.props.logout();
     }
     render() {
         return (
+
             <div>
                 <div id="preloader-active">
                     <div className="preloader d-flex align-items-center justify-content-center">
@@ -60,7 +63,7 @@ export default class Header extends React.Component {
                                             <div className="header-info-right " style={{position:"absolute",right:0}}>
                                                 {
                                                     this.state.username !== ''?
-                                                    <ul>
+                                                    <ul className="d-flex align-items-center">
                                                         <li style={{display : this.state.authority === "ROLE_PROFESSEUR" ? "block":"none"}}>
                                                             <Link to="/ajouterCours" style={{ textDecoration: "none" }} className="genric-btn success-border circle">
                                                                 Ajouter Un Cours

@@ -3,8 +3,7 @@ import { createForms } from 'react-redux-form';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { Etudiants } from './utilisateur';
-import { InitialUserRegister } from './forms';
-import { InitialUserLogin} from './forms';
+import { InitialUserRegister,InitialCours,InitialUserLogin } from './forms';
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -12,7 +11,8 @@ export const ConfigureStore = () => {
             etudiants: Etudiants,
             ...createForms({
                 user: InitialUserRegister,
-                login: InitialUserLogin
+                login: InitialUserLogin,
+                cours: InitialCours
             })
         }),
         applyMiddleware(thunk, logger)

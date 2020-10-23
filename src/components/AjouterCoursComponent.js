@@ -1,6 +1,17 @@
 import React from 'react';
+import {Form, Control} from 'react-redux-form';
 
 export default class AjouterCours extends React.Component{
+
+    constructor(props){
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit = (values) =>{
+        this.props.postCourse(values.titre, values.dateDeb, values.dateFin, values.categorie,values.image,values.description);
+    }
+
     render(){
         return(
             <main>
@@ -25,51 +36,53 @@ export default class AjouterCours extends React.Component{
                                 <h2 className="contact-title">Formilaire d'ajout de cours</h2>
                             </div>
                             <div className="col-lg-12">
-                                <form className="form-contact contact_form"  method="post" id="contactForm">
+                                <Form className="form "  id="Form" model="cours" onSubmit={(values)=> this.handleSubmit(values)}>
                                     <div className="row">
                                         
                                         <div className="col-sm-6">
                                             <div className="form-group">
-                                                <input className="form-control " name="name" id="name" type="text"  placeholder="Titre du cours"/>
+                                                <Control.text className="form-control " model=".titre" name="name" id="name" type="text"  placeholder="Titre du cours"/>
                                             </div>
                                             <div className="row">
                                                 <div className="col-sm-6 form-group">
-                                                    <input className="form-control " name="dateDeb" id="edateDeb" type="date"  placeholder="Date Début"/>
+                                                    <Control.text className="form-control " model=".dateDeb" name="dateDeb" id="edateDeb" type="date"  placeholder="Date Début"/>
                                                 </div>
                                                 <div className="col-sm-6 form-group">
-                                                    <input className="form-control" name="dateFin" id="dateFin" type="date"  placeholder="Date Fin"/>
+                                                    <Control.text className="form-control" model=".dateFin" name="dateFin" id="dateFin" type="date"  placeholder="Date Fin"/>
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 
                                                 <div className="col-sm-6 form-group">
-                                                        <div className="" id="default-select">
-                                                            <select className="form-control">
-                                                                <option value="1">Catégories</option>
-                                                                <option value="1">Développement</option>
-                                                                <option value="1">Programmation</option>
-                                                                <option value="1">AI</option>
-                                                                <option value="1">BI</option>
-                                                            </select>
+                                                        <div id="default-select">
+                                                            <Control.select className="form-control" model=".categorie" defaultValue="Marketing">
+                                                                <option value="Marketing">Marketing</option>
+                                                                <option value="Développement">Développement</option>
+                                                                <option value="Programmation">Programmation</option>
+                                                                <option value="AI">AI</option>
+                                                                <option value="BI">BI</option>
+                                                                <option value="Langues">Langues</option>
+                                                                <option value="Langues">DevOps</option>
+                                                            </Control.select>
                                                         </div>
                                                 </div>
                                                 <div className="col-sm-6 form-group">
                                                     <label for="image"><div className="genric-btn default" style={{border: "1px solid #E5E6E9"}}><i className="fa fa-upload" style={{color: "#2D3092"}}></i>&nbsp;Ajouter Une Image Du Cours</div></label>
-                                                    <input className="form-control " name="image" id="image" type="file"  placeholder="Image" hidden="true"/>
+                                                    <Control.file className="form-control " model=".image" name="image" id="image" accept="image/*" hidden="true"/>
                                                 </div>
                                             </div>
                                             
                                         </div>
                                         <div className="col-sm-6">
                                             <div className="form-group">
-                                                <textarea className="form-control w-100" name="description" id="description" cols="30" rows="10" o placeholder=" Description"></textarea>
+                                                <Control.textarea className="form-control w-100" model=".description" name="description" id="description" cols="30" rows="10" o placeholder=" Description"></Control.textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="form-group mt-3"  style={{textAlign: "center"}}>
                                         <button type="submit" className="button button-contactForm boxed-btn">Soumettre</button>
                                     </div>
-                                </form>
+                                </Form>
                             </div>
                             
                         </div>

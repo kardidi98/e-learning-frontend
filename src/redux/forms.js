@@ -14,3 +14,14 @@ export const InitialUserLogin = {
     password: ""
     
 };
+
+export const InitialCours = {
+    titre: "",
+    dateDeb: "",
+    dateFin: "",
+    categorie: "",
+    description: "",
+    image: []
+
+    
+};

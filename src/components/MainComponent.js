@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postUser,loginUser, logout } from '../redux/ActionCreators';
+import { postUser,loginUser, logout,postCourse } from '../redux/ActionCreators';
 import { actions } from 'react-redux-form';
 import Header from './HeaderComponent';
 import Accueil from './AccueilComponent';
@@ -25,7 +25,9 @@ const mapDispatchToProps = dispatch => ({
     postUser: (email, password, role, nom, prenom, adresse, tel,image) => dispatch(postUser(email, password, role, nom, prenom, adresse, tel,image)),
     resetUserForm: () => { dispatch(actions.reset('user'))},
     loginUser: (email, password) => dispatch(loginUser(email, password)),
-    resetUserLoginForm: () => { dispatch(actions.reset('login'))}
+    resetUserLoginForm: () => { dispatch(actions.reset('login'))},
+    postCourse:  (titre, dateDeb, dateFin, categorie,image,description) => dispatch(postCourse(titre, dateDeb, dateFin, categorie,image,description)),
+    resetCourseForm: () => {dispatch(actions.reset("cours"))},
   });
 
  class Main extends Component {
@@ -43,6 +45,11 @@ const mapDispatchToProps = dispatch => ({
               <Login loginUser={this.props.loginUser}  resetUserLoginForm={this.props.resetUserLoginForm}/>
             );
           };
+          const addCourse = () =>{
+            return (
+              <AddCours postCourse={this.props.postCourse}/>
+            )
+          }
          return (
             <div >
                 <Header logout={this.props.logout}/>
@@ -50,7 +57,7 @@ const mapDispatchToProps = dispatch => ({
                         <Route path="/accueil" exact component={Accueil}></Route>
                         <Route path="/apropos" exact component={About}></Route>
                         <Route path="/contact" exact component={Contact}></Route>
-                        <Route path="/ajouterCours" exact component={AddCours}></Route>
+                        <Route path="/ajouterCours" exact component={addCourse}></Route>
                         <Route path="/cours" exact component={Cours}></Route>
                         <Route path="/enseignants" exact component={Enseignants}></Route>
                         <Route path="/inscription" exact component={SignUp}></Route>

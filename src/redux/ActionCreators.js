@@ -1,5 +1,5 @@
 import * as ActionTypes from './ActionTypes';
-import { service_utilisateur_baseUrl } from './service_utilisateur_baseUrl';
+import { service_utilisateur_baseUrl,service_cours_baseUrl } from './baseUrls';
 import axios from 'axios';
 import Alert from 'react-s-alert';
 const createHistory = require("history").createBrowserHistory;
@@ -139,5 +139,55 @@ export const logout = () => (dispatch) => {
             window.location.reload(false)
           },2000)
 }
+
+
+export const postCourse = (titre, dateDeb, dateFin, categorie,image,description) => (dispatch) => {
+  const headers = new Headers();
+  headers.append('Content-Type', 'multipart/form-data');
+  headers.append("Access-Control-Allow-Origin", "*");
+  
+  const newCourse = {
+    nom: titre,
+    dateDeb: dateDeb,
+    dateFin: dateFin,
+    categorie: categorie,
+    description:description,
+
+  };
+
+
+  const formData = new FormData();
+  
+  formData.append('image',image[0]);
+  formData.append('cours', new Blob([JSON.stringify(newCourse)], { type: "application/json" }));
+  formData.append('professeur', localStorage.getItem("username"));
+
+  return axios.post(service_cours_baseUrl+"courses/add",formData,headers)
+  .then((response)=>{
+    
+    if(response.data === "Course added"){
+        
+        Alert.success('Cours ajouté avec succès.', {
+          position: 'bottom-left',
+          effect: 'stackslide',
+          timeout: 'none'});
+
+        setTimeout(()=>{
+          history.push('/accueil');
+          window.location.reload(false)
+        },2000)
+      return response
+    }
+    
+    
+  })
+  .catch(error => {
+     console.log('post course', error.message);
+     Alert.error('Problème dans le serveur ! Réssayez plus tard.', {
+      position: 'bottom-left',
+      effect: 'stackslide',
+      timeout: 'none'});
+    }); 
+};
 
 

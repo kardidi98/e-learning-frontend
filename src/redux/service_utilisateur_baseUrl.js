@@ -1,1 +1,0 @@
-export const service_utilisateur_baseUrl = 'http://localhost:8081/';
