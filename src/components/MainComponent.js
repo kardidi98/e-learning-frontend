@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postUser,loginUser } from '../redux/ActionCreators';
+import { postUser,loginUser, logout } from '../redux/ActionCreators';
 import { actions } from 'react-redux-form';
 import Header from './HeaderComponent';
 import Accueil from './AccueilComponent';
@@ -21,6 +21,7 @@ const mapStateToProps = state => {
     }
   }
 const mapDispatchToProps = dispatch => ({
+    logout: () => dispatch(logout()),
     postUser: (email, password, role, nom, prenom, adresse, tel,image) => dispatch(postUser(email, password, role, nom, prenom, adresse, tel,image)),
     resetUserForm: () => { dispatch(actions.reset('user'))},
     loginUser: (email, password) => dispatch(loginUser(email, password)),
@@ -44,7 +45,7 @@ const mapDispatchToProps = dispatch => ({
           };
          return (
             <div >
-                <Header/>
+                <Header logout={this.props.logout}/>
                 <Switch >
                         <Route path="/accueil" exact component={Accueil}></Route>
                         <Route path="/apropos" exact component={About}></Route>

@@ -38,3 +38,7 @@
   }
 }
 
+.dropdown-menu li:hover{
+  cursor: pointer;
+  color: inherit;
+}

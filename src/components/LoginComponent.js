@@ -1,5 +1,6 @@
 import React from 'react';
 import { Control, Form, Errors} from 'react-redux-form';
+import {Link} from 'react-router-dom';
 
 export default class Login extends React.Component{
     constructor(props) {
@@ -39,7 +40,7 @@ export default class Login extends React.Component{
                             <h2 className="contact-title" align="center">Formulaire de connexion</h2>
                         </div>
                         <div className="col-lg-12">
-                            <Form className="form-contact form_form" model="login"
+                            <Form className="form form_form" model="login"
                                 onSubmit={(values) => this.handleSubmit(values)}>
                                 <div className="row">
                                     
@@ -61,11 +62,26 @@ export default class Login extends React.Component{
                                         
                                         </div>
                                     </div>
+                                   
                                 </div>
                                 <div className="form-group mt-3"  style={{textAlign: "center"}}>
                                     <button type="submit" className="button button-contactForm boxed-btn">connexion</button>
                                 </div>
+                                <hr/>
+                                <div className="col-sm-12">
+                                    <small>
+                                        <span>
+                                            Vous n'avez pas de compte ?
+                                        </span>
+                                        &nbsp;
+                                        <Link to={"/inscription"}>
+                                            inscrivez-vous.
+                                        </Link>
+                                    </small>
+                                        
+                                </div>
                             </Form>
+
                         </div>
                         
                     </div>

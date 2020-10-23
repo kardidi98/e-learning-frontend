@@ -13,17 +13,17 @@ export default class Accueil extends React.Component{
                             <div className="row align-items-center">
                                 <div className="col-xl-6 col-lg-7 col-md-8">
                                     <div className="hero__caption" style={{textAlign: "initial"}}>
-                                        <span data-animation="fadeInLeft" data-delay=".2s">Cours En Ligne</span>
-                                        <h3 data-animation="fadeInLeft" data-delay=".4s">#StayHome</h3>
-                                        <h1 data-animation="fadeInLeft" data-delay=".4s">Apprenez En Ligne Plus Facilement!</h1>
+                                        <span >Cours En Ligne</span>
+                                        <h3>#StayHome</h3>
+                                        <h1>Apprenez En Ligne Plus Facilement!</h1>
 
                                         <div className="hero_btn">
-                                            <Link to="/connexion" style={{textDecoration: "none"}} className="button boxed-btn "  data-animation="fadeInLeft" data-delay=".8s">Commencez</Link>
+                                            <Link to="/connexion" style={{textDecoration: "none"}} className="button boxed-btn " >Commencez</Link>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-xl-6 col-lg-5">
-                                    <div className="hero-man d-none d-lg-block f-right" data-animation="jello" data-delay=".4s">
+                                    <div className="hero-man d-none d-lg-block f-right">
                                         <img src="../assets/img/hero/we-create.png" alt=""/>
                                     </div>
                                 </div>

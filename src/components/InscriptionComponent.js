@@ -41,15 +41,15 @@ export default class Inscription extends React.Component{
                         </div>
                     </div>
                 </div>
-                <section className="form-section ">
-                    <div className="container rounded" style={{boxShadow: "0 0 10px rgba(0,0,0,0.3)", padding: "50px", width:"30%"}}>
+                <section className="form-section row justify-content-center">
+                    <div className="col-lg-4 col-md-8 container rounded" style={{boxShadow: "0 0 10px rgba(0,0,0,0.3)", padding: "50px"}}>
                         
                     <div className="row">
                         <div className="col-12">
-                            <h2 className="contact-title" align="center">Formulaire d'inscription</h2>
+                            <h2 className="title" align="center">Formulaire d'inscription</h2>
                         </div>
                         <div className="col-lg-12">
-                            <Form className="form-contact form_form" model="user"
+                            <Form className="form form_form" model="user"
                                 onSubmit={(values) => this.handleSubmit(values)} id="SignUpForm" encType="multipart/form-data">
                                 <div className="row">
                                     <div className="col-sm-6">

@@ -27,13 +27,15 @@ export const postUser = (email, password, role, nom, prenom, adresse, tel,image)
     nom: nom,
     prenom: prenom,
     adresse: adresse,
-    tel: tel,
-    image: 0
+    tel: tel
   };
 
 
   const formData = new FormData();
-  formData.append('image', image[0]);
+  if(image.length > 0){
+    formData.append('image',image[0]);
+  }
+  
   formData.append('utilisateur', new Blob([JSON.stringify(newUser)], { type: "application/json" }));
   return axios.post(service_utilisateur_baseUrl+"users/signup",formData,headers)
   .then((response)=>{
@@ -82,10 +84,25 @@ export const loginUser = (email, password) => (dispatch) => {
 
   return axios.post(service_utilisateur_baseUrl+"users/login",User,headers)
   .then((response)=>{
-    console.log(response.data)
-    if(response.data === "Logged in successfully."){
+     if(response.data === "dosen't exist."){
+      Alert.error('Email inconnu ! Essayez de s\'enregistrer si vous n\'avez pas de compte.', {
+        position: 'bottom-left',
+        effect: 'stackslide',
+        timeout: 'none'});
+    }
+    else if(response.data === "Incorrect Password"){
+      Alert.error('Mot de passe incorrect', {
+        position: 'bottom-left',
+        effect: 'stackslide',
+        timeout: 'none'});
+    }
+    else{
+        localStorage.setItem("authorization", response.data.token);
+        localStorage.setItem("username", email);
         
-        Alert.success('Connexion réussite.', {
+        localStorage.setItem("authority",JSON.parse(window.atob(response.data.token.split('.')[1])).roles[0].authority);
+        
+        Alert.success('Connexion réussie.', {
           position: 'bottom-left',
           effect: 'stackslide',
           timeout: 'none'});
@@ -93,22 +110,12 @@ export const loginUser = (email, password) => (dispatch) => {
         setTimeout(()=>{
           history.push('/accueil');
           window.location.reload(false)
-        },3000)
+        },2000)
         
-      return response
+      
     }
-    else if(response.data === "dosen't exist."){
-      Alert.error('Email inconnu ! Essayez de s\'enregistrer si vous n\'avez pas de compte.', {
-        position: 'bottom-left',
-        effect: 'stackslide',
-        timeout: 'none'});
-    }
-    else{
-      Alert.error('Mot de passe incorrect', {
-        position: 'bottom-left',
-        effect: 'stackslide',
-        timeout: 'none'});
-    }
+    
+    return response
     
   })
   .catch(error => {
@@ -119,5 +126,18 @@ export const loginUser = (email, password) => (dispatch) => {
       timeout: 'none'});
     }); 
 };
+
+export const logout = () => (dispatch) => {
+        localStorage.clear();
+        Alert.success('Déconnexion réussie ! Revisitez-nous.', {
+            position: 'bottom-left',
+            effect: 'stackslide',
+            timeout: 'none'});
+  
+          setTimeout(()=>{
+            history.push('/accueil');
+            window.location.reload(false)
+          },2000)
+}
 
 

@@ -2,7 +2,28 @@ import React from 'react';
 import logo from '../favicon.ico';
 import { Link } from 'react-router-dom';
 
+
+
 export default class Header extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            username : '',
+            authority:'',
+        }
+        this.logOut = this.logOut.bind(this);
+    }
+    componentDidMount(){
+        if(localStorage.getItem("username") && localStorage.getItem("authority")){
+            this.setState({
+                username : localStorage.getItem("username"),
+                authority : localStorage.getItem("authority")
+            })
+        }
+    }
+    logOut(){
+        this.props.logout();
+    }
     render() {
         return (
             <div>
@@ -29,20 +50,41 @@ export default class Header extends React.Component {
                                 </div>
                                 <div className="container">
                                     <div className="col-xl-12">
-                                        <div className="row d-flex justify-content-between align-items-center">
+                                        <div className="row  align-items-center">
                                             <div className="header-info-left">
                                                 <ul>
                                                     <li>e.learning@gmail.com</li>
                                                     <li>+212 667 45 22 56</li>
                                                 </ul>
                                             </div>
-                                            <div className="header-info-right">
-                                                <ul>
-                                                    <li><Link to="/ajouterCours" style={{ textDecoration: "none" }} className="genric-btn success-border circle">Ajouter Un Cours</Link></li>
-                                                    <li ><Link to="/connexion" style={{ textDecoration: "none" }}><i className="ti-user"></i>Se connecter</Link></li>
-                                                    <li><Link to="/inscription" style={{ textDecoration: "none" }}><i className="ti-lock"></i>S'inscrire</Link></li>
-
-                                                </ul>
+                                            <div className="header-info-right " style={{position:"absolute",right:0}}>
+                                                {
+                                                    this.state.username !== ''?
+                                                    <ul>
+                                                        <li style={{display : this.state.authority === "ROLE_PROFESSEUR" ? "block":"none"}}>
+                                                            <Link to="/ajouterCours" style={{ textDecoration: "none" }} className="genric-btn success-border circle">
+                                                                Ajouter Un Cours
+                                                            </Link>
+                                                        </li>
+                                                        <li className='dropdown'>
+                                                            <Link style={{textDecoration: 'none'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                {this.state.username} 
+                                                                <span class="caret"></span>
+                                                            </Link>
+                                                            <ul className="dropdown-menu">
+                                                                <li><a href='#logout' onClick={()=>this.logOut()} style={{textDecoration: 'none'}}>Déconnexion</a></li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                    :
+                                                    <ul>
+                                                        <li><Link to="/ajouterCours" style={{ textDecoration: "none" }} className="genric-btn success-border circle">Ajouter Un Cours</Link></li>
+                                                        <li ><Link to="/connexion" style={{ textDecoration: "none" }}><i className="ti-user"></i>Se connecter</Link></li>
+                                                        <li><Link to="/inscription" style={{ textDecoration: "none" }}><i className="ti-lock"></i>S'inscrire</Link></li>
+                                                    </ul>
+                                                    
+                                                }
+                                                
                                             </div>
                                             <div>
 
