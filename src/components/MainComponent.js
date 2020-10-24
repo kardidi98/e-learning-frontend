@@ -32,7 +32,24 @@ const mapDispatchToProps = dispatch => ({
 
  class Main extends Component {
    
+  constructor(props){
+    super(props);
+    this.state = {
+        username : '',
+        authority:'',
+    }
+    
+  }
+  componentDidMount(){
+      if(localStorage.getItem("username") && localStorage.getItem("authority")){
+          this.setState({
+              username : localStorage.getItem("username"),
+              authority : localStorage.getItem("authority")
+          })
+        
+      }
 
+  }
       
     render(){
         const SignUp = () => {
@@ -46,10 +63,25 @@ const mapDispatchToProps = dispatch => ({
             );
           };
           const addCourse = () =>{
-            return (
-              <AddCours postCourse={this.props.postCourse}/>
-            )
-          }
+            if(this.state.authority === "" || this.state.authority === "ROLE_ETUDIANT"){
+              return (
+                
+                Alert.error('Il faut s\'inscrire ou s\'authentifier en tant qu\'enseignant pour effectuer cette opération.', {
+                  position: 'bottom-left',
+                  effect: 'stackslide',
+                  timeout: 'none'}),
+                  <Redirect to="/connexion"/>
+                )
+               
+            }
+            else{
+                return (
+                  <AddCours postCourse={this.props.postCourse}/>
+               )
+              }   
+            }
+           
+          
          return (
             <div >
                 <Header logout={this.props.logout}/>

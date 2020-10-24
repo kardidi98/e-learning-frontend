@@ -1,5 +1,5 @@
 import React from 'react';
-import { Control, Form, Errors} from 'react-redux-form';
+import { Control, Form} from 'react-redux-form';
 import {Link} from 'react-router-dom';
 
 export default class Login extends React.Component{

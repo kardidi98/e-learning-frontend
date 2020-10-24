@@ -1,9 +1,9 @@
 import React from 'react';
-import { Control, Form, Errors} from 'react-redux-form';
+import { Control, Form} from 'react-redux-form';
 
-const maxLength = (len) => (val) => !(val) || (val.length <= len);
+/*const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
-const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);*/
 
 export default class Inscription extends React.Component{
     constructor(props) {

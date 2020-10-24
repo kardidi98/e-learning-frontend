@@ -6,6 +6,8 @@ const createHistory = require("history").createBrowserHistory;
 
 let history = createHistory();
 
+
+
 export const addUser = (user) => ({
   type: ActionTypes.ADD_USER,
   payload: user
@@ -18,7 +20,6 @@ export const userFailed = (errmess) => ({
 export const postUser = (email, password, role, nom, prenom, adresse, tel,image) => (dispatch) => {
   const headers = new Headers();
   headers.append('Content-Type', 'multipart/form-data');
-  headers.append("Access-Control-Allow-Origin", "*");
   
   const newUser = {
     email: email,
@@ -63,7 +64,7 @@ export const postUser = (email, password, role, nom, prenom, adresse, tel,image)
   })
   .catch(error => {
      console.log('post user', error.message);
-     Alert.error('Problème dans le serveur ! Réssayez plus tard.', {
+     Alert.error('Problème dans le serveur ou Vous n\'êtes pas autorisé.', {
       position: 'bottom-left',
       effect: 'stackslide',
       timeout: 'none'});
@@ -74,7 +75,6 @@ export const postUser = (email, password, role, nom, prenom, adresse, tel,image)
 export const loginUser = (email, password) => (dispatch) => {
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
-  headers.append("Access-Control-Allow-Origin", "*");
   
   const User = {
     email: email,
@@ -120,7 +120,7 @@ export const loginUser = (email, password) => (dispatch) => {
   })
   .catch(error => {
      console.log('login user', error.message);
-     Alert.error('Problème dans le serveur ! Réssayez plus tard.', {
+     Alert.error('Problème dans le serveur ou Vous n\'êtes pas autorisé.', {
       position: 'bottom-left',
       effect: 'stackslide',
       timeout: 'none'});
@@ -141,11 +141,11 @@ export const logout = () => (dispatch) => {
 }
 
 
-export const postCourse = (titre, dateDeb, dateFin, categorie,image,description) => (dispatch) => {
+export const postCourse =  (titre, dateDeb, dateFin, categorie,image,description) => (dispatch) => {
   const headers = new Headers();
   headers.append('Content-Type', 'multipart/form-data');
-  headers.append("Access-Control-Allow-Origin", "*");
   
+
   const newCourse = {
     nom: titre,
     dateDeb: dateDeb,
@@ -182,8 +182,8 @@ export const postCourse = (titre, dateDeb, dateFin, categorie,image,description)
     
   })
   .catch(error => {
-     console.log('post course', error.message);
-     Alert.error('Problème dans le serveur ! Réssayez plus tard.', {
+     console.log('post course', error);
+     Alert.error('Problème dans le serveur ou Vous n\'êtes pas autorisé.', {
       position: 'bottom-left',
       effect: 'stackslide',
       timeout: 'none'});

@@ -41,21 +41,21 @@ export default class AjouterCours extends React.Component{
                                         
                                         <div className="col-sm-6">
                                             <div className="form-group">
-                                                <Control.text className="form-control " model=".titre" name="name" id="name" type="text"  placeholder="Titre du cours"/>
+                                                <Control.text className="form-control " model=".titre" name="name" id="name" type="text"  placeholder="Titre du cours" required/>
                                             </div>
                                             <div className="row">
                                                 <div className="col-sm-6 form-group">
-                                                    <Control.text className="form-control " model=".dateDeb" name="dateDeb" id="edateDeb" type="date"  placeholder="Date Début"/>
+                                                    <Control.text className="form-control " model=".dateDeb" name="dateDeb" id="edateDeb" type="date"  placeholder="Date Début" required/>
                                                 </div>
                                                 <div className="col-sm-6 form-group">
-                                                    <Control.text className="form-control" model=".dateFin" name="dateFin" id="dateFin" type="date"  placeholder="Date Fin"/>
+                                                    <Control.text className="form-control" model=".dateFin" name="dateFin" id="dateFin" type="date"  placeholder="Date Fin" required/>
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 
                                                 <div className="col-sm-6 form-group">
                                                         <div id="default-select">
-                                                            <Control.select className="form-control" model=".categorie" defaultValue="Marketing">
+                                                            <Control.select className="form-control" model=".categorie" defaultValue="Marketing" required>
                                                                 <option value="Marketing">Marketing</option>
                                                                 <option value="Développement">Développement</option>
                                                                 <option value="Programmation">Programmation</option>
@@ -68,14 +68,14 @@ export default class AjouterCours extends React.Component{
                                                 </div>
                                                 <div className="col-sm-6 form-group">
                                                     <label for="image"><div className="genric-btn default" style={{border: "1px solid #E5E6E9"}}><i className="fa fa-upload" style={{color: "#2D3092"}}></i>&nbsp;Ajouter Une Image Du Cours</div></label>
-                                                    <Control.file className="form-control " model=".image" name="image" id="image" accept="image/*" hidden="true"/>
+                                                    <Control.file className="form-control " model=".image" name="image" id="image" accept="image/*" hidden="true" required/>
                                                 </div>
                                             </div>
                                             
                                         </div>
                                         <div className="col-sm-6">
                                             <div className="form-group">
-                                                <Control.textarea className="form-control w-100" model=".description" name="description" id="description" cols="30" rows="10" o placeholder=" Description"></Control.textarea>
+                                                <Control.textarea className="form-control w-100" model=".description" name="description" id="description" cols="30" rows="10" o placeholder=" Description" required></Control.textarea>
                                             </div>
                                         </div>
                                     </div>
