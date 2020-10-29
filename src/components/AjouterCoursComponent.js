@@ -36,7 +36,7 @@ export default class AjouterCours extends React.Component{
                                 <h2 className="contact-title">Formilaire d'ajout de cours</h2>
                             </div>
                             <div className="col-lg-12">
-                                <Form className="form "  id="Form" model="cours" onSubmit={(values)=> this.handleSubmit(values)}>
+                                <Form className="form "  id="Form" model="course" onSubmit={(values)=> this.handleSubmit(values)}>
                                     <div className="row">
                                         
                                         <div className="col-sm-6">

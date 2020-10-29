@@ -1,5 +1,5 @@
 import * as ActionTypes from './ActionTypes';
-import { service_utilisateur_baseUrl,service_cours_baseUrl } from './baseUrls';
+import { service_utilisateur_baseUrl,service_cours_baseUrl,service_image_baseUrl } from './baseUrls';
 import axios from 'axios';
 import Alert from 'react-s-alert';
 const createHistory = require("history").createBrowserHistory;
@@ -7,15 +7,74 @@ const createHistory = require("history").createBrowserHistory;
 let history = createHistory();
 
 
-
-export const addUser = (user) => ({
-  type: ActionTypes.ADD_USER,
-  payload: user
-});
-export const userFailed = (errmess) => ({
-  type: ActionTypes.FAILED_USER,
+export const profFailed = (errmess) => ({
+  type: ActionTypes.FAILED_PROF,
   payload: errmess
 });
+export const profLoading = () => ({
+  type: ActionTypes.LOADING_PROF
+});
+export const addProf = (prof) => ({
+  type: ActionTypes.ADD_PROF,
+  payload: prof
+});
+
+export const getAllProfessors = () => (dispatch) => {
+  
+
+  dispatch(profLoading());
+
+  return axios.get(service_utilisateur_baseUrl+"users/professors")
+  .then((response) => {
+      if(response){
+        dispatch(addProf(response.data));
+        return response.data;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    })
+    .catch(error => dispatch(profFailed(error.message)));
+    
+}
+
+
+export const imageFailed = (errmess) => ({
+  type: ActionTypes.FAILED_IMAGE,
+  payload: errmess
+});
+export const imageLoading = () => ({
+  type: ActionTypes.LOADING_IMAGE
+});
+export const addImage = (img) => ({
+  type: ActionTypes.ADD_IMAGE,
+  payload: img
+});
+
+export const getImages = () => (dispatch) => {
+  
+
+  dispatch(imageLoading());
+
+  return axios.get(service_image_baseUrl+"images/All")
+  .then((response) => {
+      if(response){
+        dispatch(addImage(response.data));
+        return response.data;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    })
+    .catch(error => dispatch(imageFailed(error.message)));
+    
+}
+
+
 
 export const postUser = (email, password, role, nom, prenom, adresse, tel,image) => (dispatch) => {
   const headers = new Headers();
@@ -173,7 +232,7 @@ export const postCourse =  (titre, dateDeb, dateFin, categorie,image,description
           timeout: 'none'});
 
         setTimeout(()=>{
-          history.push('/accueil');
+          history.push('/cours');
           window.location.reload(false)
         },2000)
       return response
@@ -190,4 +249,37 @@ export const postCourse =  (titre, dateDeb, dateFin, categorie,image,description
     }); 
 };
 
+
+export const courseLoading = () => ({
+  type: ActionTypes.LOADING_COURSE
+});
+export const courseFailed = (errmess) => ({
+  type: ActionTypes.FAILED_COURSE,
+  payload: errmess
+});
+export const addCourse = (course) => ({
+  type: ActionTypes.ADD_COURSE,
+  payload: course
+});
+
+export const getAllCourses = () => (dispatch) => {
+  
+  
+  dispatch(courseLoading());
+
+  return axios.get(service_cours_baseUrl+"courses/All")
+  .then((response) => {
+      if(response){
+        dispatch(addCourse(response.data));
+        return response.data;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    })
+    .catch(error => dispatch(courseFailed(error.message)));
+    
+}
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postUser,loginUser, logout,postCourse } from '../redux/ActionCreators';
+import { postUser,loginUser, logout,postCourse,getAllCourses,getAllProfessors,getImages } from '../redux/ActionCreators';
 import { actions } from 'react-redux-form';
 import Header from './HeaderComponent';
 import Accueil from './AccueilComponent';
@@ -17,7 +17,10 @@ import Alert from 'react-s-alert';
 
 const mapStateToProps = state => {
     return {
-      etudiants: state.etudiants
+      etudiants: state.etudiants,
+      cours : state.cours,
+      professeurs: state.professeurs,
+      images: state.images,
     }
   }
 const mapDispatchToProps = dispatch => ({
@@ -27,7 +30,10 @@ const mapDispatchToProps = dispatch => ({
     loginUser: (email, password) => dispatch(loginUser(email, password)),
     resetUserLoginForm: () => { dispatch(actions.reset('login'))},
     postCourse:  (titre, dateDeb, dateFin, categorie,image,description) => dispatch(postCourse(titre, dateDeb, dateFin, categorie,image,description)),
-    resetCourseForm: () => {dispatch(actions.reset("cours"))},
+    resetCourseForm: () => {dispatch(actions.reset("course"))},
+    getAllCourses: () => {dispatch(getAllCourses())},
+    getAllProfessors: () => {dispatch(getAllProfessors())},
+    getImages: () => {dispatch(getImages())},
   });
 
  class Main extends Component {
@@ -41,6 +47,10 @@ const mapDispatchToProps = dispatch => ({
     
   }
   componentDidMount(){
+    
+    this.props.getAllCourses();
+    this.props.getAllProfessors();
+    this.props.getImages();
       if(localStorage.getItem("username") && localStorage.getItem("authority")){
           this.setState({
               username : localStorage.getItem("username"),
@@ -81,7 +91,35 @@ const mapDispatchToProps = dispatch => ({
               }   
             }
            
-          
+            const Courses = () => {
+              
+              return(
+                
+                <Cours cours = {this.props.cours}
+                       coursLoading = {this.props.cours.isLoading}
+                       coursFailed = {this.props.cours.errMess}
+                       professeurs={this.props.professeurs}
+                       profLoading = {this.props.professeurs.isLoading}
+                       profFailed = {this.props.professeurs.errMess}
+                       images = {this.props.images}
+                       imageLoading = {this.props.images.isLoading}
+                       imageFailed = {this.props.images.errMess}
+                />
+              );
+            };
+            const Professors = () => {
+              
+              return(
+                
+                <Enseignants professeurs = {this.props.professeurs}
+                       profLoading = {this.props.professeurs.isLoading}
+                       profFailed = {this.props.professeurs.errMess}
+                       images = {this.props.images}
+                       imageLoading = {this.props.images.isLoading}
+                       imageFailed = {this.props.images.errMess}
+                />
+              );
+            };
          return (
             <div >
                 <Header logout={this.props.logout}/>
@@ -90,8 +128,8 @@ const mapDispatchToProps = dispatch => ({
                         <Route path="/apropos" exact component={About}></Route>
                         <Route path="/contact" exact component={Contact}></Route>
                         <Route path="/ajouterCours" exact component={addCourse}></Route>
-                        <Route path="/cours" exact component={Cours}></Route>
-                        <Route path="/enseignants" exact component={Enseignants}></Route>
+                        <Route path="/cours" exact component={Courses}></Route>
+                        <Route path="/enseignants" exact component={Professors}></Route>
                         <Route path="/inscription" exact component={SignUp}></Route>
                         <Route path="/connexion" exact component={LogIn}></Route>
                         <Redirect to="/accueil"/>

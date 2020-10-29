@@ -1,2 +1,12 @@
-export const ADD_USER = 'ADD_USER';
-export const FAILED_USER = 'FAILED_USER';
+export const ADD_PROF = 'ADD_PROF';
+export const FAILED_PROF = 'FAILED_PROF';
+export const LOADING_PROF = 'LOADING_PROF';
+export const ADD_ETUDIANT = 'ADD_ETUDIANT';
+export const FAILED_ETUDIANT = 'FAILED_ETUDIANT';
+export const LOADING_ETUDIANT = 'LOADING_ETUDIANT';
+export const ADD_COURSE = 'ADD_COURSE';
+export const FAILED_COURSE = 'FAILED_COURSE';
+export const LOADING_COURSE = 'LOADING_COURSE';
+export const ADD_IMAGE = 'ADD_IMAGE';
+export const FAILED_IMAGE = 'FAILED_IMAGE';
+export const LOADING_IMAGE = 'LOADING_IMAGE';
