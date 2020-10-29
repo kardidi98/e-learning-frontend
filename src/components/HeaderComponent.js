@@ -74,8 +74,12 @@ export default class Header extends React.Component {
                                                                 {this.state.username} 
                                                                 <span class="caret"></span>
                                                             </Link>
-                                                            <ul className="dropdown-menu">
+                                                            <ul className="dropdown-menu" >
+                                                                
+                                                                <li><Link to={this.state.authority === "ROLE_PROFESSEUR" ? "/mescours":"/coursinscrits"} style={{textDecoration: 'none'}}>Mes Cours</Link></li>
+                                                                <hr/>
                                                                 <li><a href='#logout' onClick={()=>this.logOut()} style={{textDecoration: 'none'}}>Déconnexion</a></li>
+                                                            
                                                             </ul>
                                                         </li>
                                                     </ul>

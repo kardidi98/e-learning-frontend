@@ -1,5 +1,6 @@
 import React from 'react';
 import { Loading } from './LoadingComponent';
+import { Image } from 'react-bootstrap';
 
 
 function RenderProf({ prof, image }) {
@@ -10,7 +11,7 @@ function RenderProf({ prof, image }) {
         <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="single-team mb-30">
                 <div class="team-img">
-                    <img src={"data:image/*;base64," + image.data} alt={prof.nom + ' ' + prof.prenom} width="100%" height="100%" />
+                    <Image src={"data:image/*;base64," + image.data} alt={prof.id} width="100%" height="100%"  />
 
                 </div>
                 <div class="team-caption" >

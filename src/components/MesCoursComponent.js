@@ -1,43 +1,47 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import { IconButton } from '@material-ui/core';
 import { Image } from 'react-bootstrap';
 
 
-let categorie = "all";
-let enseignant = "";
 
-
-function RenderCours({ cours, prof, image }) {
+function RenderCours({ cours, image }) {
     return (
 
-        <div className=" col-lg-4 col-md-6 col-sm-6 " >
-            <div className="single-course mb-40">
-                <div className="course-img">
-                    <Image src={"data:image/*;base64," + image.data} alt={cours.nom} width="100%" height="100%"/>
+        <div className=" col-lg-12 col-md-12 col-sm-12 " >
+            <div className="my-single-course mb-40 row align-items-center">
+                <div className="col-lg-3 col-md-12 col-sm-12">
+                    <Image src={"data:image/*;base64," + image.data} alt={cours.nom} width="100%" height="100%" />
                 </div>
-                <div className="course-caption">
+                <div className="col-lg-7 col-md-12 col-sm-12 my-course-caption">
                     <div className="course-cap-top">
-                        <h3>{cours.nom}</h3>
+                        <h1>{cours.nom}</h1>
                     </div>
-                    <div className="course-cap-mid justify-content-between align-items-center">
+                    <div className="my-course-cap-mid justify-content-between ">
 
                         <ul>
                             <li>52 inscrits.</li>
                             <li>{cours.description}.</li>
                         </ul>
-                        <ul>
-                            <li><strong>Par: </strong><a href="#link">{prof.nom + ' ' + prof.prenom + '.'}</a></li>
-                        </ul>
+
 
                     </div>
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="browse-btn2 text-center mt-50">
-                                <a href="courses.html" className="btn genric-btn primary-border">S'inscrire</a>
-                            </div>
-                        </div>
-                    </div>
+                    
+
+
                 </div>
+                <div className="col-lg-2 col-md-12 col-sm-12" style={{textAlign: "center"}}>
+                        <Link to={"/editercours/" + cours.id} >
+                            <IconButton aria-label="Edit" title="Edit"><EditOutlinedIcon style={{ color: '#2196F3' }} /></IconButton>
+                        </Link>
+                        <Link>
+                            <IconButton aria-label="Delete" title="Delete"><DeleteOutlineOutlinedIcon style={{ color: '#F44336' }} /></IconButton>
+                        </Link>
+                    </div>
+
             </div>
         </div>
 
@@ -47,57 +51,42 @@ function RenderCours({ cours, prof, image }) {
 
 
 
-export default class Cours extends React.Component {
+export default class MesCours extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            cours: this.props.cours.cours,
+            cours: this.props.cours,
 
         }
     }
 
     handleChage = (e) => {
-        let cours = this.props.cours.cours;
-        let professeur = [];
+        let cours = this.props.cours;
+
 
         const target = e.target;
         const value = target.value;
-        const name = target.name;
 
-        if (name === "enseignant") { enseignant = value }
-        if (name === "categorie") { categorie = value }
-        if (enseignant !== "") {
-            professeur = this.props.professeurs.professeurs.filter((item) => item.nom.toLowerCase().includes(enseignant.toLowerCase()))[0];
-        }
-
-        if (enseignant === "" && categorie === "all") {
+        if (value === "all") {
             this.setState({
-                cours: this.props.cours.cours
+                cours: this.props.cours
             })
         }
 
-        else{
-                this.setState({
-                cours: cours.filter((item) => {
-                    if (professeur) {
-                        return parseInt(item.professeurId) === parseInt(professeur.iduser) || item.categorie === (categorie)
-                    }
-                    else {
-                        return null;
-                    }
-
-                })
+        else {
+            this.setState({
+                cours: cours.filter((item) => item.categorie === value)
             })
         }
-        
+
 
 
     }
 
     render() {
 
-        if (this.props.cours.isLoading || this.props.professeurs.isLoading || this.props.images.isLoading) {
+        if (this.props.cours.isLoading || this.props.images.isLoading) {
             return (
                 <div className="container">
                     <div className="row">
@@ -126,7 +115,7 @@ export default class Cours extends React.Component {
                                 <div className="row">
                                     <div className="col-xl-12">
                                         <div className="hero-cap hero-cap2 text-center">
-                                            <h2>Tous Les Cours</h2>
+                                            <h2>Mes Cours</h2>
                                         </div>
                                     </div>
                                 </div>
@@ -158,10 +147,7 @@ export default class Cours extends React.Component {
                                                             </div>
 
                                                         </div>
-                                                        <div className="mt-10 col-lg-4" >
-                                                            <input type="text" name="enseignant" placeholder="Chercher d'enseignant par nom" onChange={this.handleChage}
-                                                                className="form-control" style={{ boxShadow: "0 0 10px rgba(0,0,0,0.3)", borderRadius: 3 }} />
-                                                        </div>
+
 
                                                     </div>
 
@@ -180,7 +166,6 @@ export default class Cours extends React.Component {
 
                                                             return (
                                                                 <RenderCours cours={item}
-                                                                    prof={this.props.professeurs.professeurs.filter((p) => parseInt(p.iduser) === parseInt(item.professeurId))[0]}
                                                                     image={this.props.images.images.filter((img) => parseInt(img.id) === parseInt(item.imageId))[0]}
                                                                 />
                                                             );

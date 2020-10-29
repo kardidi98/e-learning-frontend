@@ -47,15 +47,7 @@
         cursor: default;
         z-index: 1;
     }
-        .irs-slider.single {
-
-        }
-        .irs-slider.from {
-
-        }
-        .irs-slider.to {
-
-        }
+        
         .irs-slider.type_last {
             z-index: 2;
         }
@@ -142,15 +134,6 @@
     border-color: transparent !important;
 }
 
-
-/* Ion.RangeSlider, Simple Skin
-// css version 2.0.3
-// Â© Denis Ineshin, 2014    https://github.com/IonDen
-// Â© guybowden, 2014        https://github.com/guybowden
-// ===================================================================================================================*/
-
-/* =====================================================================================================================
-// Skin details */
 
 .irs {
     height: 55px;
@@ -256,5 +239,4 @@
     color: #99a4ac;
 }
 
-.irs-disabled {
-}
+

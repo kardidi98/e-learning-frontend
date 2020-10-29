@@ -3388,7 +3388,7 @@
 	}
 	
 	.popular-course .single-course .course-img img,
-	.all-course .single-course .course-img img {
+	.all-course .single-course .course-img img,.my-course-img img {
 	    width: 100%;
 	    transform: scale(1);
 	    -webkit-transition: all .4s ease-out 0s;
@@ -3399,7 +3399,7 @@
 	}
 	
 	.popular-course .single-course:hover .course-img img,
-	.all-course .single-course:hover .course-img img {
+	.all-course .single-course:hover .course-img img{
 		transform: scale(1.01);
 	}
 	.course-img img,.team-img img{
@@ -3410,6 +3410,14 @@
 		width: 100%;
 		height: 258px;
 	}
+	
+	.my-course-caption{
+		padding: 20px;
+	}
+	.my-single-course{
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	}
+	
 	
 	.popular-course .single-course .course-caption,
 	.all-course .single-course .course-caption, .team-caption{

@@ -8,10 +8,11 @@ import Accueil from './AccueilComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
 import Cours from './CoursComponent';
-import AddCours from './AjouterCoursComponent';
+import AddOrUpdateCours from './AjouterOuMAJCoursComponent';
 import Login from './LoginComponent';
 import Inscription from './InscriptionComponent';
 import Enseignants from './EnseignantsComponent';
+import MesCours from './MesCoursComponent';
 import Footer from './FooterComponent';
 import Alert from 'react-s-alert';
 
@@ -72,21 +73,17 @@ const mapDispatchToProps = dispatch => ({
               <Login loginUser={this.props.loginUser}  resetUserLoginForm={this.props.resetUserLoginForm}/>
             );
           };
-          const addCourse = () =>{
-            if(this.state.authority === "" || this.state.authority === "ROLE_ETUDIANT"){
+          const addOrUpdateCourse = () =>{
+            if(this.state.authority === null || this.state.authority === "ROLE_ETUDIANT"){
               return (
                 
-                Alert.error('Il faut s\'inscrire ou s\'authentifier en tant qu\'enseignant pour effectuer cette opération.', {
-                  position: 'bottom-left',
-                  effect: 'stackslide',
-                  timeout: 'none'}),
                   <Redirect to="/connexion"/>
                 )
                
             }
             else{
                 return (
-                  <AddCours postCourse={this.props.postCourse}/>
+                  <AddOrUpdateCours postCourse={this.props.postCourse}/>
                )
               }   
             }
@@ -106,6 +103,53 @@ const mapDispatchToProps = dispatch => ({
                        imageFailed = {this.props.images.errMess}
                 />
               );
+            };
+            const MyCourses = () => {
+              if(localStorage.getItem("authority") === null || localStorage.getItem("authority") === "ROLE_ETUDIANT"){
+                  return (
+                    <Redirect to="/connexion"/>
+                  )
+                 
+              }
+              else {
+                
+                let professeur = Object.assign({},this.props.professeurs.professeurs.filter((item) => item.email === this.state.username)[0]);
+                  
+                  return(
+                    
+                      <MesCours cours = {this.props.cours.cours.filter((item)=> item.professeurId === professeur.iduser)}
+                            coursLoading = {this.props.cours.isLoading}
+                            coursFailed = {this.props.cours.errMess}
+                            images = {this.props.images}
+                            imageLoading = {this.props.images.isLoading}
+                            imageFailed = {this.props.images.errMess}
+                      />
+                    );  
+              }
+              
+            };
+            const EditCourse = ({match}) => {
+              if(localStorage.getItem("authority") === null || localStorage.getItem("authority") === "ROLE_ETUDIANT"){
+                  return (
+                    <Redirect to="/connexion"/>
+                  )
+                 
+              }
+              else {
+                
+                  let cours = Object.assign({},this.props.cours.cours.filter((item)=> item.id === parseInt(match.params.id,10))[0]);
+                  return(
+                      
+                      <AddOrUpdateCours cours = {cours}
+                            coursLoading = {this.props.cours.isLoading}
+                            coursFailed = {this.props.cours.errMess}
+                            image = {this.props.images.images.filter((item)=> parseInt(item.id) === parseInt(cours.imageId))[0]}
+                            imageLoading = {this.props.images.isLoading}
+                            imageFailed = {this.props.images.errMess}
+                      />
+                    );  
+              }
+              
             };
             const Professors = () => {
               
@@ -127,8 +171,10 @@ const mapDispatchToProps = dispatch => ({
                         <Route path="/accueil" exact component={Accueil}></Route>
                         <Route path="/apropos" exact component={About}></Route>
                         <Route path="/contact" exact component={Contact}></Route>
-                        <Route path="/ajouterCours" exact component={addCourse}></Route>
+                        <Route path="/ajouterCours" exact component={addOrUpdateCourse}></Route>
                         <Route path="/cours" exact component={Courses}></Route>
+                        <Route path="/mescours" exact component={MyCourses}></Route>
+                        <Route path="/editercours/:id" exact component={EditCourse}></Route>
                         <Route path="/enseignants" exact component={Professors}></Route>
                         <Route path="/inscription" exact component={SignUp}></Route>
                         <Route path="/connexion" exact component={LogIn}></Route>
