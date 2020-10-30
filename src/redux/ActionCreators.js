@@ -217,7 +217,9 @@ export const postCourse =  (titre, dateDeb, dateFin, categorie,image,description
 
   const formData = new FormData();
   
-  formData.append('image',image[0]);
+  if(image){
+    formData.append('image',image[0]);
+  }
   formData.append('cours', new Blob([JSON.stringify(newCourse)], { type: "application/json" }));
   formData.append('professeur', localStorage.getItem("username"));
 
@@ -232,7 +234,60 @@ export const postCourse =  (titre, dateDeb, dateFin, categorie,image,description
           timeout: 'none'});
 
         setTimeout(()=>{
-          history.push('/cours');
+          history.push('/mescours');
+          window.location.reload(false)
+        },2000)
+      return response
+    }
+    
+    
+  })
+  .catch(error => {
+     console.log('post course', error);
+     Alert.error('Problème dans le serveur ou Vous n\'êtes pas autorisé.', {
+      position: 'bottom-left',
+      effect: 'stackslide',
+      timeout: 'none'});
+    }); 
+};
+
+export const updateCourse =  (id,titre, dateDeb, dateFin, categorie,image,description) => (dispatch) => {
+  const headers = new Headers();
+  headers.append('Content-Type', 'multipart/form-data');
+  
+
+  const updatedCourse = {
+    id: id,
+    nom: titre,
+    dateDeb: dateDeb,
+    dateFin: dateFin,
+    categorie: categorie,
+    description:description,
+
+  };
+
+
+  const formData = new FormData();
+  if(image){
+    formData.append('image',image[0]);
+  }
+  
+  
+  formData.append('cours', new Blob([JSON.stringify(updatedCourse)], { type: "application/json" }));
+  formData.append('professeur', localStorage.getItem("username"));
+
+  return axios.put(service_cours_baseUrl+"courses/update/"+id,formData,headers)
+  .then((response)=>{
+    
+    if(response.data === "MAJ réussie"){
+        
+        Alert.success('Cours mis à jour avec succès.', {
+          position: 'bottom-left',
+          effect: 'stackslide',
+          timeout: 'none'});
+
+        setTimeout(()=>{
+          history.push('/mescours');
           window.location.reload(false)
         },2000)
       return response
@@ -262,6 +317,8 @@ export const addCourse = (course) => ({
   payload: course
 });
 
+
+
 export const getAllCourses = () => (dispatch) => {
   
   
@@ -280,6 +337,40 @@ export const getAllCourses = () => (dispatch) => {
       }
     })
     .catch(error => dispatch(courseFailed(error.message)));
+    
+}
+
+export const deleteCourse = (id) => (dispatch) => {
+
+  if (window.confirm("Etes-vous sûre de vouloir supprimer ce cours ?")) {
+    return axios.delete(service_cours_baseUrl+"courses/delete/"+id)
+    .then((response) => {
+        if(response){
+          Alert.success('Cours supprimé avec succès.', {
+            position: 'bottom-left',
+            effect: 'stackslide',
+            timeout: 'none'});
+
+          setTimeout(()=>{
+            history.push('/mescours');
+            window.location.reload(false)
+          },2000)
+          return response.data;
+        }
+        else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      })
+      .catch(error => {
+        console.log('post course', error);
+        Alert.error('Problème dans le serveur ou Vous n\'êtes pas autorisé.', {
+        position: 'bottom-left',
+        effect: 'stackslide',
+        timeout: 'none'});
+      });
+    }
     
 }
 

@@ -13,7 +13,13 @@ function RenderCours({ cours, prof, image }) {
         <div className=" col-lg-4 col-md-6 col-sm-6 " >
             <div className="single-course mb-40">
                 <div className="course-img">
-                    <Image src={"data:image/*;base64," + image.data} alt={cours.nom} width="100%" height="100%"/>
+                    {
+                        image ?
+                            <Image src={"data:image/*;base64," + image.data} alt={cours.nom} width="100%" height="100%" />
+                            :
+                            <Image src="assets/img/logo/icon-cours.jpg" alt={cours.nom} width="100%" height="100%" />
+                    }
+
                 </div>
                 <div className="course-caption">
                     <div className="course-cap-top">
@@ -77,8 +83,8 @@ export default class Cours extends React.Component {
             })
         }
 
-        else{
-                this.setState({
+        else {
+            this.setState({
                 cours: cours.filter((item) => {
                     if (professeur) {
                         return parseInt(item.professeurId) === parseInt(professeur.iduser) || item.categorie === (categorie)
@@ -90,7 +96,7 @@ export default class Cours extends React.Component {
                 })
             })
         }
-        
+
 
 
     }

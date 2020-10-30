@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postUser,loginUser, logout,postCourse,getAllCourses,getAllProfessors,getImages } from '../redux/ActionCreators';
+import { postUser,loginUser, logout,postCourse,getAllCourses,getAllProfessors
+  ,getImages, updateCourse,deleteCourse } from '../redux/ActionCreators';
+import {InitialCours } from '../redux/forms';
 import { actions } from 'react-redux-form';
 import Header from './HeaderComponent';
 import Accueil from './AccueilComponent';
@@ -15,6 +17,7 @@ import Enseignants from './EnseignantsComponent';
 import MesCours from './MesCoursComponent';
 import Footer from './FooterComponent';
 import Alert from 'react-s-alert';
+
 
 const mapStateToProps = state => {
     return {
@@ -31,7 +34,10 @@ const mapDispatchToProps = dispatch => ({
     loginUser: (email, password) => dispatch(loginUser(email, password)),
     resetUserLoginForm: () => { dispatch(actions.reset('login'))},
     postCourse:  (titre, dateDeb, dateFin, categorie,image,description) => dispatch(postCourse(titre, dateDeb, dateFin, categorie,image,description)),
+    updateCourse:  (id, titre, dateDeb, dateFin, categorie,image,description) => dispatch(updateCourse(id,titre, dateDeb, dateFin, categorie,image,description)),
     resetCourseForm: () => {dispatch(actions.reset("course"))},
+    changeCourseForm: (model, value) => {dispatch(actions.change(model, value))},
+    deleteCourse: (id) => {dispatch(deleteCourse(id))},
     getAllCourses: () => {dispatch(getAllCourses())},
     getAllProfessors: () => {dispatch(getAllProfessors())},
     getImages: () => {dispatch(getImages())},
@@ -52,13 +58,14 @@ const mapDispatchToProps = dispatch => ({
     this.props.getAllCourses();
     this.props.getAllProfessors();
     this.props.getImages();
-      if(localStorage.getItem("username") && localStorage.getItem("authority")){
+    
+    if(localStorage.getItem("username") && localStorage.getItem("authority")){
           this.setState({
               username : localStorage.getItem("username"),
               authority : localStorage.getItem("authority")
           })
         
-      }
+    }
 
   }
       
@@ -82,8 +89,11 @@ const mapDispatchToProps = dispatch => ({
                
             }
             else{
+              this.props.changeCourseForm("course",InitialCours)
                 return (
-                  <AddOrUpdateCours postCourse={this.props.postCourse}/>
+                  <AddOrUpdateCours postCourse={this.props.postCourse} resetCourseForm={this.props.resetCourseForm}
+                                    updateCourse={this.props.updateCourse}
+                  />
                )
               }   
             }
@@ -117,7 +127,8 @@ const mapDispatchToProps = dispatch => ({
                   
                   return(
                     
-                      <MesCours cours = {this.props.cours.cours.filter((item)=> item.professeurId === professeur.iduser)}
+                      <MesCours deleteCourse={this.props.deleteCourse}
+                            cours = {this.props.cours.cours.filter((item)=> item.professeurId === professeur.iduser)}
                             coursLoading = {this.props.cours.isLoading}
                             coursFailed = {this.props.cours.errMess}
                             images = {this.props.images}
@@ -138,9 +149,19 @@ const mapDispatchToProps = dispatch => ({
               else {
                 
                   let cours = Object.assign({},this.props.cours.cours.filter((item)=> item.id === parseInt(match.params.id,10))[0]);
+                  const InitialCoursMAJ = {
+                    id: cours.id,
+                    nom: cours.nom,
+                    dateDeb: cours.dateDeb,
+                    dateFin: cours.dateFin,
+                    categorie: cours.categorie,
+                    description: cours.description
+                  };
+                  this.props.changeCourseForm("course",InitialCoursMAJ);
                   return(
                       
-                      <AddOrUpdateCours cours = {cours}
+                      <AddOrUpdateCours resetCourseForm={this.props.resetCourseForm} updateCourse={this.props.updateCourse}
+                            cours = {cours}
                             coursLoading = {this.props.cours.isLoading}
                             coursFailed = {this.props.cours.errMess}
                             image = {this.props.images.images.filter((item)=> parseInt(item.id) === parseInt(cours.imageId))[0]}

@@ -16,12 +16,10 @@ export const InitialUserLogin = {
 };
 
 export const InitialCours = {
-    titre: "",
+    id: "",
+    nom: "",
     dateDeb: "",
     dateFin: "",
     categorie: "",
     description: "",
-    image: []
-
-    
 };

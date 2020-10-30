@@ -3,29 +3,37 @@ import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import FolderOpenOutlinedIcon from '@material-ui/icons/FolderOpenOutlined';
 import { IconButton } from '@material-ui/core';
 import { Image } from 'react-bootstrap';
 
 
 
-function RenderCours({ cours, image }) {
+function RenderCours({ cours, image, deleteCourse }) {
     return (
 
         <div className=" col-lg-12 col-md-12 col-sm-12 " >
             <div className="my-single-course mb-40 row align-items-center">
                 <div className="col-lg-3 col-md-12 col-sm-12">
-                    <Image src={"data:image/*;base64," + image.data} alt={cours.nom} width="100%" height="100%" />
-                </div>
+                    {
+                        image?
+                        <Image src={"data:image/*;base64," + image.data} alt={cours.nom} width="100%" height="100%"/>
+                        :
+                        <Image src="assets/img/logo/icon-cours.jpg" alt={cours.nom} width="100%" height="100%"/>                    
+                    }                </div>
                 <div className="col-lg-7 col-md-12 col-sm-12 my-course-caption">
-                    <div className="course-cap-top">
+                    <div className="course-cap-top d-flex justify-content-between align-items-center">
                         <h1>{cours.nom}</h1>
+                        <div className="align-items-center"><FolderOpenOutlinedIcon style={{color :"#4CD3E3"}}/>&nbsp;{cours.categorie}</div>
                     </div>
+
                     <div className="my-course-cap-mid justify-content-between ">
 
                         <ul>
                             <li>52 inscrits.</li>
                             <li>{cours.description}.</li>
                         </ul>
+                       
 
 
                     </div>
@@ -37,7 +45,7 @@ function RenderCours({ cours, image }) {
                         <Link to={"/editercours/" + cours.id} >
                             <IconButton aria-label="Edit" title="Edit"><EditOutlinedIcon style={{ color: '#2196F3' }} /></IconButton>
                         </Link>
-                        <Link>
+                        <Link onClick={deleteCourse.bind(this,cours.id)}>
                             <IconButton aria-label="Delete" title="Delete"><DeleteOutlineOutlinedIcon style={{ color: '#F44336' }} /></IconButton>
                         </Link>
                     </div>
@@ -167,6 +175,7 @@ export default class MesCours extends React.Component {
                                                             return (
                                                                 <RenderCours cours={item}
                                                                     image={this.props.images.images.filter((img) => parseInt(img.id) === parseInt(item.imageId))[0]}
+                                                                    deleteCourse={this.props.deleteCourse}
                                                                 />
                                                             );
                                                         })

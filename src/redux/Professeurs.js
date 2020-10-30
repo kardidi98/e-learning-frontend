@@ -1,6 +1,6 @@
 import * as ActionTypes from './ActionTypes';
 
-export const Professeurs = (state = { errMess: null, professeurs:[]}, action) => {
+export const Professeurs = (state = { errMess: null,isLoading: true, professeurs:[]}, action) => {
   switch (action.type) {
     case ActionTypes.ADD_PROF:
         return {...state, isLoading: false, errMess: null, professeurs: action.payload};

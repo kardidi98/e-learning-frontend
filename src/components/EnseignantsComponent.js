@@ -90,6 +90,7 @@ export default class Enseignants extends React.Component {
                             </div>
                         </div>
                     </div>
+                    &nbsp;
                     <div className="container">
 
                         <div className="row mb-15 " >
