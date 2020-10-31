@@ -1,9 +1,10 @@
 import React from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export const Loading = () => {
     return(
         <div className="col-12" style={{textAlign: "center"}}>
-            <span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>
+            <CircularProgress />
             <p style={{textAlign: "center"}}>Loading . . .</p>
         </div>
     );

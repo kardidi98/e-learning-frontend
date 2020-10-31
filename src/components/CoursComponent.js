@@ -1,13 +1,15 @@
 import React from 'react';
 import { Loading } from './LoadingComponent';
 import { Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import FolderOpenOutlinedIcon from '@material-ui/icons/FolderOpenOutlined';
 
 
 let categorie = "all";
 let enseignant = "";
 
 
-function RenderCours({ cours, prof, image }) {
+function RenderCours({ cours, prof, image, subscribe }) {
     return (
 
         <div className=" col-lg-4 col-md-6 col-sm-6 " >
@@ -22,8 +24,9 @@ function RenderCours({ cours, prof, image }) {
 
                 </div>
                 <div className="course-caption">
-                    <div className="course-cap-top">
-                        <h3>{cours.nom}</h3>
+                    <div className="course-cap-top d-flex justify-content-between align-items-center">
+                        <h4>{cours.nom}</h4>
+                        <small className="align-items-center"><FolderOpenOutlinedIcon style={{color :"#4CD3E3"}}/>&nbsp;{cours.categorie}</small>
                     </div>
                     <div className="course-cap-mid justify-content-between align-items-center">
 
@@ -39,7 +42,17 @@ function RenderCours({ cours, prof, image }) {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="browse-btn2 text-center mt-50">
-                                <a href="courses.html" className="btn genric-btn primary-border">S'inscrire</a>
+                                {
+                                    localStorage.getItem("username") !== null?
+                                    <Link onClick={subscribe.bind(this,cours.id )} style={{display: localStorage.getItem("authority") === "ROLE_PROFESSEUR"? "none":"inline-block"}}
+                                        className="btn genric-btn primary-border">
+                                        S'inscrire
+                                    </Link>
+                                    :
+                                    <Link  to="/connexion" className="btn genric-btn primary-border">S'inscrire</Link>
+
+
+                                }
                             </div>
                         </div>
                     </div>
@@ -183,11 +196,13 @@ export default class Cours extends React.Component {
                                                 {
                                                     this.state.cours.length > 0 ?
                                                         this.state.cours.map((item) => {
-
+                                                            
                                                             return (
+
                                                                 <RenderCours cours={item}
                                                                     prof={this.props.professeurs.professeurs.filter((p) => parseInt(p.iduser) === parseInt(item.professeurId))[0]}
                                                                     image={this.props.images.images.filter((img) => parseInt(img.id) === parseInt(item.imageId))[0]}
+                                                                    subscribe={this.props.subscribe}
                                                                 />
                                                             );
                                                         })

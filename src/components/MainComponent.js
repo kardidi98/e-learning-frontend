@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postUser,loginUser, logout,postCourse,getAllCourses,getAllProfessors
-  ,getImages, updateCourse,deleteCourse } from '../redux/ActionCreators';
+  ,getImages, updateCourse,deleteCourse, subscribe } from '../redux/ActionCreators';
 import {InitialCours } from '../redux/forms';
 import { actions } from 'react-redux-form';
 import Header from './HeaderComponent';
@@ -38,6 +38,7 @@ const mapDispatchToProps = dispatch => ({
     resetCourseForm: () => {dispatch(actions.reset("course"))},
     changeCourseForm: (model, value) => {dispatch(actions.change(model, value))},
     deleteCourse: (id) => {dispatch(deleteCourse(id))},
+    subscribe: (id) => {dispatch(subscribe(id))},
     getAllCourses: () => {dispatch(getAllCourses())},
     getAllProfessors: () => {dispatch(getAllProfessors())},
     getImages: () => {dispatch(getImages())},
@@ -102,7 +103,8 @@ const mapDispatchToProps = dispatch => ({
               
               return(
                 
-                <Cours cours = {this.props.cours}
+                <Cours 
+                       cours = {this.props.cours}
                        coursLoading = {this.props.cours.isLoading}
                        coursFailed = {this.props.cours.errMess}
                        professeurs={this.props.professeurs}
@@ -111,6 +113,7 @@ const mapDispatchToProps = dispatch => ({
                        images = {this.props.images}
                        imageLoading = {this.props.images.isLoading}
                        imageFailed = {this.props.images.errMess}
+                       subscribe={this.props.subscribe}
                 />
               );
             };

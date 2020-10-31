@@ -1,7 +1,12 @@
 import React from 'react';
 import logo from '../favicon.ico';
 import { Link } from 'react-router-dom';
-
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import SearchIcon from '@material-ui/icons/Search';
+import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 
 export default class Header extends React.Component {
@@ -45,10 +50,11 @@ export default class Header extends React.Component {
                         <div className="main-header ">
                             <div className="header-top d-none d-lg-block" >
                                 <div className="header-left-social">
-                                    <ul className="header-social">
-                                        <li><a href="#link"><i className="fab fa-twitter"></i></a></li>
-                                        <li><a href="#link"><i className="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#link"><i className="fab fa-linkedin-in"></i></a></li>
+                                    <ul className="header-social ">
+                                        <li><a href="#link"><FacebookIcon fontSize="small"/></a></li>
+                                        <li><a href="#link"><LinkedInIcon fontSize="small"/></a></li>
+                                        <li><a href="#link"><TwitterIcon fontSize="small"/></a></li>
+                                        
                                     </ul>
                                 </div>
                                 <div className="container">
@@ -86,8 +92,8 @@ export default class Header extends React.Component {
                                                     :
                                                     <ul>
                                                         <li><Link to="/ajouterCours" style={{ textDecoration: "none" }} className="genric-btn success-border circle">Ajouter Un Cours</Link></li>
-                                                        <li ><Link to="/connexion" style={{ textDecoration: "none" }}><i className="ti-user"></i>Se connecter</Link></li>
-                                                        <li><Link to="/inscription" style={{ textDecoration: "none" }}><i className="ti-lock"></i>S'inscrire</Link></li>
+                                                        <li ><Link to="/connexion" style={{ textDecoration: "none" }}><PersonOutlinedIcon style={{color: "#4044B4"}}/>Se connecter</Link></li>
+                                                        <li><Link to="/inscription" style={{ textDecoration: "none" }}><LockOutlinedIcon style={{color: "#4044B4"}}/>S'inscrire</Link></li>
                                                     </ul>
                                                     
                                                 }
@@ -126,7 +132,7 @@ export default class Header extends React.Component {
                                             <form action="#" className="form-box f-right ">
                                                 <input type="text" name="Search" placeholder="Chercher Des Cours ..." />
                                                 <div className="search-icon">
-                                                    <i className="fas fa-search special-tag"></i>
+                                                    <SearchIcon/>
                                                 </div>
                                             </form>
 

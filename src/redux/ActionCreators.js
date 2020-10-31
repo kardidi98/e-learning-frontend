@@ -374,3 +374,39 @@ export const deleteCourse = (id) => (dispatch) => {
     
 }
 
+export const subscribe = (id) => (dispatch) => {
+
+  
+    return axios.post(service_cours_baseUrl+"courses/subscribe/"+localStorage.getItem("username")+"/"+id)
+    .then((response) => {
+        if(response.data === "Inscription réussie"){
+          Alert.success('Vous êtes maintenant inscrit dans ce cours.', {
+            position: 'bottom-left',
+            effect: 'stackslide',
+            timeout: 'none'});
+
+          setTimeout(()=>{
+            history.push('/mescours');
+            window.location.reload(false)
+          },2000)
+          return response.data;
+        }
+        else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      })
+      .catch(error => {
+        console.log('post course', error);
+        Alert.error('Problème dans le serveur ou Vous n\'êtes pas autorisé.', {
+        position: 'bottom-left',
+        effect: 'stackslide',
+        timeout: 'none'});
+      });
+    
+    
+}
+
+
+

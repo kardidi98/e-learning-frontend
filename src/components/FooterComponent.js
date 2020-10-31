@@ -1,5 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import ArrowUpwardOutlinedIcon from '@material-ui/icons/ArrowUpwardOutlined';
 
 export default class Footer extends React.Component{
      
@@ -19,11 +25,11 @@ export default class Footer extends React.Component{
                                         <h4>Nos Réseaux Sociaux</h4>
                                     </div>
                                     <div className="footer-social">
-                                        <a href="#link"><i className="fab fa-facebook-f"></i></a>
-                                        <a href="#link"><i className="fab fa-twitter"></i></a>
-                                        <a  href="#link"><i className="fab fa-google"></i></a>
-                                        <a href="#link"><i className="fab fa-instagram"></i></a>
-                                        <a href="#link"><i className="fab fa-youtube"></i></a>
+                                        <a href="#link"><FacebookIcon fontSize="large"/></a>
+                                        <a href="#link"><TwitterIcon fontSize="large"/></a>
+                                        <a href="#link"><InstagramIcon fontSize="large"/></a>
+                                        <a href="#link"><YouTubeIcon fontSize="large"/></a>
+                                        <a href="#link"><LinkedInIcon fontSize="large"/></a>
                                       </div>
                                 </div>
                             </div>
@@ -54,7 +60,9 @@ export default class Footer extends React.Component{
                                         <ul>
                                             <li><a href="#link">Développement</a></li>
                                             <li><a href="#link">Programmation</a></li>
-                                            <li><a href="#link">SEO</a></li>
+                                            <li><a href="#link">DevOps</a></li>
+                                            <li><a href="#link">Finance</a></li>
+                                            <li><a href="#link">Langues</a></li>
                                             <li><a href="#link">BI</a></li>
                                             <li><a href="#link">Marketing</a></li>
                                         </ul>
@@ -79,8 +87,8 @@ export default class Footer extends React.Component{
                 </div>
             </div>
         </footer>
-        <div id="back-top" >
-            <a title="Go to Top" href="#top"> <i className="fas fa-level-up-alt" style={{color: "white"}}></i></a>
+        <div id="back-top" className="align-items-center" >
+            <a className="align-items-center" title="Go to Top" href="#top"> <ArrowUpwardOutlinedIcon  style={{color: "white"}}/></a>
         </div>
         </div>
         )

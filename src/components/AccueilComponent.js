@@ -18,7 +18,7 @@ export default class Accueil extends React.Component{
                                         <h1>Apprenez En Ligne Plus Facilement!</h1>
 
                                         <div className="hero_btn">
-                                            <Link to="/connexion" style={{textDecoration: "none"}} className="button boxed-btn " >Commencez</Link>
+                                            <Link to="/cours" style={{textDecoration: "none"}} className="button boxed-btn " >Commencez</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -45,11 +45,9 @@ export default class Accueil extends React.Component{
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-lg-4 col-md-6 col-sm-6">
+                        <div className="col-lg-3 col-md-6 col-sm-6">
                             <div className="single-cat mb-50">
-                                <div className="cat-icon">
-                                    <span className="flaticon-computing"></span>
-                                </div>
+                                
                                 <div className="cat-cap">
                                     <h5><a  href="#link">Programmation</a></h5>
                                     <p>Sorem hpsum folor sixdsft amhtget, consectetur adipiscing eliht, sed do eiusmod tempor incidi.</p>
@@ -57,11 +55,9 @@ export default class Accueil extends React.Component{
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6 col-sm-6">
+                        <div className="col-lg-3 col-md-6 col-sm-6">
                             <div className="single-cat mb-50">
-                                <div className="cat-icon">
-                                    <span className="flaticon-education"></span>
-                                </div>
+                                
                                 <div className="cat-cap">
                                     <h5><a  href="#link">Langues</a></h5>
                                     <p>Sorem hpsum folor sixdsft amhtget, consectetur adipiscing eliht, sed do eiusmod tempor incidi.</p>
@@ -69,23 +65,19 @@ export default class Accueil extends React.Component{
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6 col-sm-6">
+                        <div className="col-lg-3 col-md-6 col-sm-6">
                             <div className="single-cat mb-50">
-                                <div className="cat-icon">
-                                    <span className="flaticon-communications"></span>
-                                </div>
+                                
                                 <div className="cat-cap">
-                                    <h5><a  href="#link">SEO</a></h5>
+                                    <h5><a  href="#link">DevOps</a></h5>
                                     <p>Sorem hpsum folor sixdsft amhtget, consectetur adipiscing eliht, sed do eiusmod tempor incidi.</p>
                                     
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6 col-sm-6">
+                        <div className="col-lg-3 col-md-6 col-sm-6">
                             <div className="single-cat mb-50">
-                                <div className="cat-icon">
-                                    <span className="flaticon-web-design"></span>
-                                </div>
+                                
                                 <div className="cat-cap">
                                     <h5><a  href="#link">Développement</a></h5>
                                     <p>Sorem hpsum folor sixdsft amhtget, consectetur adipiscing eliht, sed do eiusmod tempor incidi.</p>
@@ -93,11 +85,9 @@ export default class Accueil extends React.Component{
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6 col-sm-6">
+                        <div className="col-lg-3 col-md-6 col-sm-6">
                             <div className="single-cat mb-50">
-                                <div className="cat-icon">
-                                    <span className="flaticon-tools-and-utensils"></span>
-                                </div>
+                                
                                 <div className="cat-cap">
                                     <h5><a  href="#link">BI</a></h5>
                                     <p>Sorem hpsum folor sixdsft amhtget, consectetur adipiscing eliht, sed do eiusmod tempor incidi.</p>
@@ -105,11 +95,29 @@ export default class Accueil extends React.Component{
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6 col-sm-6">
+                        <div className="col-lg-3 col-md-6 col-sm-6">
                             <div className="single-cat mb-50">
-                                <div className="cat-icon">
-                                    <span className="flaticon-business"></span>
+                               
+                                <div className="cat-cap">
+                                    <h5><a  href="#link">AI</a></h5>
+                                    <p>Sorem hpsum folor sixdsft amhtget, consectetur adipiscing eliht, sed do eiusmod tempor incidi.</p>
+                                    
                                 </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-6">
+                            <div className="single-cat mb-50">
+                                
+                                <div className="cat-cap">
+                                    <h5><a  href="#link">Finance</a></h5>
+                                    <p>Sorem hpsum folor sixdsft amhtget, consectetur adipiscing eliht, sed do eiusmod tempor incidi.</p>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-6">
+                            <div className="single-cat mb-50">
+                                
                                 <div className="cat-cap">
                                     <h5><a  href="#link">Marketing</a></h5>
                                     <p>Sorem hpsum folor sixdsft amhtget, consectetur adipiscing eliht, sed do eiusmod tempor incidi.</p>
@@ -118,6 +126,7 @@ export default class Accueil extends React.Component{
                             </div>
                         </div>
                     </div>
+                    
                     
                 </div>
             </div>
