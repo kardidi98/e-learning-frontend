@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postUser,loginUser, logout,postCourse,getAllCourses,getAllProfessors
-  ,getImages, updateCourse,deleteCourse, subscribe } from '../redux/ActionCreators';
+  ,getImages, updateCourse,deleteCourse, subscribe ,getSubscriptions
+  , getAllStudents, unsubscribe} from '../redux/ActionCreators';
 import {InitialCours } from '../redux/forms';
 import { actions } from 'react-redux-form';
 import Header from './HeaderComponent';
@@ -17,6 +18,8 @@ import Enseignants from './EnseignantsComponent';
 import MesCours from './MesCoursComponent';
 import Footer from './FooterComponent';
 import Alert from 'react-s-alert';
+import EtudiantsInscrits from './EtudiantsInscritsComponent';
+import MesCoursInscrits from './MesCoursInscritsComponent';
 
 
 const mapStateToProps = state => {
@@ -25,6 +28,7 @@ const mapStateToProps = state => {
       cours : state.cours,
       professeurs: state.professeurs,
       images: state.images,
+      subscription: state.subscription
     }
   }
 const mapDispatchToProps = dispatch => ({
@@ -39,8 +43,11 @@ const mapDispatchToProps = dispatch => ({
     changeCourseForm: (model, value) => {dispatch(actions.change(model, value))},
     deleteCourse: (id) => {dispatch(deleteCourse(id))},
     subscribe: (id) => {dispatch(subscribe(id))},
+    unsubscribe: (id) => {dispatch(unsubscribe(id))},
+    getSubscriptions: (coursId) => dispatch(getSubscriptions(coursId)),
     getAllCourses: () => {dispatch(getAllCourses())},
     getAllProfessors: () => {dispatch(getAllProfessors())},
+    getAllStudents: () => {dispatch(getAllStudents())},
     getImages: () => {dispatch(getImages())},
   });
 
@@ -58,8 +65,9 @@ const mapDispatchToProps = dispatch => ({
     
     this.props.getAllCourses();
     this.props.getAllProfessors();
+    this.props.getAllStudents();
     this.props.getImages();
-    
+    this.props.getSubscriptions();
     if(localStorage.getItem("username") && localStorage.getItem("authority")){
           this.setState({
               username : localStorage.getItem("username"),
@@ -100,10 +108,14 @@ const mapDispatchToProps = dispatch => ({
             }
            
             const Courses = () => {
-              
+              let me = Object.assign({},this.props.etudiants.etudiants.filter((item) => item.email === this.state.username)[0]);
               return(
                 
-                <Cours 
+                <Cours totalSubscription={this.props.subscription.subscription}
+                       unsubscribe = {this.props.unsubscribe}
+                       inscriptions = {this.props.subscription.subscription.filter((item) => item.etudiantId === me.iduser)}
+                       inscriptionLoading = {this.props.subscription.isLoading}
+                       inscriptionFailed = {this.props.subscription.errMess}
                        cours = {this.props.cours}
                        coursLoading = {this.props.cours.isLoading}
                        coursFailed = {this.props.cours.errMess}
@@ -118,7 +130,7 @@ const mapDispatchToProps = dispatch => ({
               );
             };
             const MyCourses = () => {
-              if(localStorage.getItem("authority") === null || localStorage.getItem("authority") === "ROLE_ETUDIANT"){
+              if(localStorage.getItem("authority") === null || this.state.authority === "ROLE_ETUDIANT"){
                   return (
                     <Redirect to="/connexion"/>
                   )
@@ -130,7 +142,8 @@ const mapDispatchToProps = dispatch => ({
                   
                   return(
                     
-                      <MesCours deleteCourse={this.props.deleteCourse}
+                      <MesCours totalSubscription={this.props.subscription.subscription}
+                            deleteCourse={this.props.deleteCourse}
                             cours = {this.props.cours.cours.filter((item)=> item.professeurId === professeur.iduser)}
                             coursLoading = {this.props.cours.isLoading}
                             coursFailed = {this.props.cours.errMess}
@@ -140,6 +153,34 @@ const mapDispatchToProps = dispatch => ({
                       />
                     );  
               }
+              
+              
+            };
+            const MySubCourses = () => {
+              if(localStorage.getItem("authority") === null || this.state.authority === "ROLE_PROFESSEUR"){
+                  return (
+                    <Redirect to="/connexion"/>
+                  )
+                 
+              }
+              else {
+                
+                let me = Object.assign({},this.props.etudiants.etudiants.filter((item) => item.email === this.state.username)[0]);
+                
+                  return(
+                    
+                      <MesCoursInscrits totalSubscription={this.props.subscription.subscription}
+                            unsubscribe = {this.props.unsubscribe}
+                            inscriptions = {this.props.subscription.subscription.filter((item) => item.etudiantId === me.iduser)}
+                            inscriptionLoading = {this.props.subscription.isLoading}
+                            inscriptionFailed = {this.props.subscription.errMess}
+                            images = {this.props.images}
+                            imageLoading = {this.props.images.isLoading}
+                            imageFailed = {this.props.images.errMess}
+                      />
+                    );  
+              }
+              
               
             };
             const EditCourse = ({match}) => {
@@ -188,17 +229,47 @@ const mapDispatchToProps = dispatch => ({
                 />
               );
             };
+
+            const ListStudents = ({match}) => {
+              if(localStorage.getItem("authority") === null || localStorage.getItem("authority") === "ROLE_ETUDIANT"){
+                  return (
+                    <Redirect to="/connexion"/>
+                  )
+                 
+              }
+              else {
+                  let inscription = (this.props.subscription.subscription.filter((item) => item.courId.id === parseInt(match.params.coursId,10)));
+                  return(
+                    
+                      <EtudiantsInscrits inscriptions={inscription}
+                            inscriptionLoading={this.props.subscription.isLoading}
+                            inscriptionFailed = {this.props.subscription.errMess}
+                            etudiants={this.props.etudiants.etudiants}
+                            etudiantsLoading = {this.props.cours.isLoading}
+                            etudiantsFailed = {this.props.cours.errMess}
+                            cours = {this.props.cours.cours.filter((item)=> item.id === parseInt(match.params.coursId))[0]}
+                            coursLoading = {this.props.cours.isLoading}
+                            coursFailed = {this.props.cours.errMess}
+                      />
+                    );  
+              }
+              
+            };
+           
          return (
             <div >
                 <Header logout={this.props.logout}/>
                 <Switch >
+                        
                         <Route path="/accueil" exact component={Accueil}></Route>
                         <Route path="/apropos" exact component={About}></Route>
                         <Route path="/contact" exact component={Contact}></Route>
                         <Route path="/ajouterCours" exact component={addOrUpdateCourse}></Route>
                         <Route path="/cours" exact component={Courses}></Route>
                         <Route path="/mescours" exact component={MyCourses}></Route>
+                        <Route path="/coursinscrits" exact component={MySubCourses}></Route>
                         <Route path="/editercours/:id" exact component={EditCourse}></Route>
+                        <Route path="/listeinscrits/:coursId" exact component={ListStudents}></Route>
                         <Route path="/enseignants" exact component={Professors}></Route>
                         <Route path="/inscription" exact component={SignUp}></Route>
                         <Route path="/connexion" exact component={LogIn}></Route>

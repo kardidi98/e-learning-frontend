@@ -6,6 +6,7 @@ import { Etudiants } from './Etudiants';
 import { Cours } from './cours';
 import { Professeurs } from './Professeurs';
 import { Images } from './Images';
+import { Subscription } from './Subscription';
 import { InitialUserRegister,InitialCours,InitialUserLogin } from './forms';
 
 export const ConfigureStore = () => {
@@ -15,6 +16,7 @@ export const ConfigureStore = () => {
             cours: Cours,
             professeurs: Professeurs,
             images: Images,
+            subscription: Subscription,
             ...createForms({
                 user: InitialUserRegister,
                 login: InitialUserLogin,

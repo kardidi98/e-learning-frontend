@@ -1,6 +1,7 @@
 import React from 'react';
 import { Loading } from './LoadingComponent';
 import { Image } from 'react-bootstrap';
+import { Container, Typography } from '@material-ui/core';
 
 
 function RenderProf({ prof, image }) {
@@ -8,13 +9,13 @@ function RenderProf({ prof, image }) {
     return (
 
 
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="single-team mb-30">
-                <div class="team-img">
-                    <Image src={"data:image/*;base64," + image.data} alt={prof.id} width="100%" height="100%"  />
+        <div className="col-lg-3 col-md-6 col-sm-6">
+            <div className="single-team mb-30">
+                <div className="team-img">
+                    <Image src={"data:image/*;base64," + image.data} alt={prof.id} width="100%" height="100%" />
 
                 </div>
-                <div class="team-caption" >
+                <div className="team-caption" >
                     <h3><a href="instructor.html">{prof.nom + ' ' + prof.prenom}</a></h3>
                     <p style={{ textAlign: "center" }}>Enseignant</p>
                 </div>
@@ -40,13 +41,13 @@ export default class Enseignants extends React.Component {
         const target = e.target;
         const value = target.value;
 
-        if(value!==""){
-            
+        if (value !== "") {
+
             this.setState({
                 professeurs: this.props.professeurs.professeurs.filter((item) => item.nom.toLowerCase().includes(value.toLowerCase()))
             })
         }
-        else{
+        else {
             this.setState({
                 professeurs: this.props.professeurs.professeurs
             })
@@ -54,7 +55,7 @@ export default class Enseignants extends React.Component {
 
     }
     render() {
-        if (this.props.professeurs.isLoading || this.props.images.isLoading) {
+        if (this.props.profLoading || this.props.imageLoading) {
             return (
                 <div className="container">
                     <div className="row">
@@ -63,12 +64,13 @@ export default class Enseignants extends React.Component {
                 </div>
             );
         }
-        else if (this.props.professeurs.errMess) {
+        else if (this.props.profFailed || this.props.imageFailed) {
             return (
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
                             <h4>{this.props.professeurs.errMess}</h4>
+                            <h4>{this.props.image.errMess}</h4>
                         </div>
                     </div>
                 </div>
@@ -125,9 +127,11 @@ export default class Enseignants extends React.Component {
                                                 );
                                             })
                                             :
-                                            <div className="col-lg-12 col-md-12 col-sm-12 " style={{ textAlign: "center" }}>
-                                                <h1>No Result</h1>
-                                            </div>
+                                            <Container>
+                                                <Typography gutterBottom variant="h2" component="h2" style={{ textAlign: "center" }} >
+                                                    Aucun résultat.
+                                                </Typography>
+                                            </Container>
                                     }
 
                                 </div>

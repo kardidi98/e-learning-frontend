@@ -4,12 +4,12 @@ import { Loading } from './LoadingComponent';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import FolderOpenOutlinedIcon from '@material-ui/icons/FolderOpenOutlined';
-import { IconButton } from '@material-ui/core';
+import { Container, IconButton, Typography } from '@material-ui/core';
 import { Image } from 'react-bootstrap';
 
 
 
-function RenderCours({ cours, image, deleteCourse }) {
+function RenderCours({ cours, image, deleteCourse, countSubscriptions }) {
     return (
 
         <div className=" col-lg-12 col-md-12 col-sm-12 " >
@@ -30,15 +30,14 @@ function RenderCours({ cours, image, deleteCourse }) {
                     <div className="my-course-cap-mid justify-content-between ">
 
                         <ul>
-                            <li>52 inscrits.</li>
+                            <li><Link to={"/listeinscrits/"+cours.id}>{countSubscriptions +" inscrits."}</Link></li>
                             <li>{cours.description}.</li>
                         </ul>
-                       
-
-
-                    </div>
+                      </div>
                     
-
+                      <Link to={"/listeinscrits/"+cours.id }  className="btn genric-btn primary-border">
+                            Liste des inscrits.
+                        </Link>
 
                 </div>
                 <div className="col-lg-2 col-md-12 col-sm-12" style={{textAlign: "center"}}>
@@ -48,7 +47,8 @@ function RenderCours({ cours, image, deleteCourse }) {
                         <Link onClick={deleteCourse.bind(this,cours.id)}>
                             <IconButton aria-label="Delete" title="Delete"><DeleteOutlineOutlinedIcon style={{ color: '#F44336' }} /></IconButton>
                         </Link>
-                    </div>
+                        
+                </div>
 
             </div>
         </div>
@@ -94,7 +94,7 @@ export default class MesCours extends React.Component {
 
     render() {
 
-        if (this.props.cours.isLoading || this.props.images.isLoading) {
+        if (this.props.coursLoading || this.props.imageLoading) {
             return (
                 <div className="container">
                     <div className="row">
@@ -103,12 +103,13 @@ export default class MesCours extends React.Component {
                 </div>
             );
         }
-        else if (this.props.cours.errMess) {
+        else if (this.props.coursFailed || this.props.imageFailed) {
             return (
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
                             <h4>{this.props.cours.errMess}</h4>
+                            <h4>{this.props.image.errMess}</h4>
                         </div>
                     </div>
                 </div>
@@ -176,13 +177,16 @@ export default class MesCours extends React.Component {
                                                                 <RenderCours cours={item}
                                                                     image={this.props.images.images.filter((img) => parseInt(img.id) === parseInt(item.imageId))[0]}
                                                                     deleteCourse={this.props.deleteCourse}
+                                                                    countSubscriptions={this.props.totalSubscription.filter((SubItem) => SubItem.courId.id === item.id).length}
                                                                 />
                                                             );
                                                         })
                                                         :
-                                                        <div className="col-lg-12 col-md-12 col-sm-12 " style={{ textAlign: "center" }}>
-                                                            <h1>No Result</h1>
-                                                        </div>
+                                                        <Container>
+                                                            <Typography  gutterBottom variant="h2" component="h2" style={{textAlign: "center"}} >
+                                                            Aucun résultat.
+                                                            </Typography>
+                                                        </Container>
                                                 }
                                             </div>
 

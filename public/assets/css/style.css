@@ -1,47 +1,5 @@
 	@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:400,500,600,700|Roboto:400,500,700|Sen:400,700,800&display=swap");
-	.white-bg {
-	    background: #ffffff
-	}
 	
-	.gray-bg {
-	    background: #f5f5f5
-	}
-	
-	.gray-bg {
-	    background: #f7f7fd
-	}
-	
-	.white-bg {
-	    background: #fff
-	}
-	
-	.black-bg {
-	    background: #16161a
-	}
-	
-	.theme-bg {
-	    background: #2d3092
-	}
-	
-	.brand-bg {
-	    background: #f1f4fa
-	}
-	
-	.testimonial-bg {
-	    background: #f9fafc
-	}
-	
-	.white-color {
-	    color: #fff
-	}
-	
-	.black-color {
-	    color: #16161a
-	}
-	
-	.theme-color {
-	    color: #2d3092
-	}
 	
 	.boxed-btn {
 	    background: #fff;

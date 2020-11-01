@@ -13,9 +13,13 @@ import 'react-s-alert/dist/s-alert-css-effects/genie.css';
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 import 'react-s-alert/dist/s-alert-css-effects/stackslide.css';
 
+
+
 ReactDOM.render(
+
   <React.StrictMode>
     <App />
+  
   </React.StrictMode>,
   document.getElementById('root')
 );

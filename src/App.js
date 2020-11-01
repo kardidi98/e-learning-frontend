@@ -3,7 +3,10 @@ import Main from './components/MainComponent';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ConfigureStore } from './redux/configureStore';
+
 import interceptors from "./components/InterceptorsComponent";
+
+
 
 
 
@@ -17,6 +20,7 @@ function App() {
           <Main/>
         </BrowserRouter>
       </Provider>
+      
     </div>
   );
 }

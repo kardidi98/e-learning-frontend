@@ -78,7 +78,7 @@ export default class Header extends React.Component {
                                                         <li className='dropdown'>
                                                             <Link style={{textDecoration: 'none'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 {this.state.username} 
-                                                                <span class="caret"></span>
+                                                                <span className="caret"></span>
                                                             </Link>
                                                             <ul className="dropdown-menu" >
                                                                 
@@ -91,7 +91,7 @@ export default class Header extends React.Component {
                                                     </ul>
                                                     :
                                                     <ul>
-                                                        <li><Link to="/ajouterCours" style={{ textDecoration: "none" }} className="genric-btn success-border circle">Ajouter Un Cours</Link></li>
+                                                        <li><Link to="/connexion" style={{ textDecoration: "none" }} className="genric-btn success-border circle">Ajouter Un Cours</Link></li>
                                                         <li ><Link to="/connexion" style={{ textDecoration: "none" }}><PersonOutlinedIcon style={{color: "#4044B4"}}/>Se connecter</Link></li>
                                                         <li><Link to="/inscription" style={{ textDecoration: "none" }}><LockOutlinedIcon style={{color: "#4044B4"}}/>S'inscrire</Link></li>
                                                     </ul>

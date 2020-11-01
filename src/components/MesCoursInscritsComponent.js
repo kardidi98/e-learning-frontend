@@ -1,87 +1,47 @@
 import React from 'react';
 import { Loading } from './LoadingComponent';
-import { Image } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import FolderOpenOutlinedIcon from '@material-ui/icons/FolderOpenOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import FolderOpenOutlinedIcon from '@material-ui/icons/FolderOpenOutlined';
 import { Button, Container, Typography } from '@material-ui/core';
+import { Image } from 'react-bootstrap';
 
 
-let categorie = "all";
-let enseignant = "";
 
-function RenderUserActionByRole({cours,subscribe,unsubscribe, inscription}){
-    if(localStorage.getItem("authority") === null){     
-        return(
-            <Link  to="/connexion" className="btn genric-btn primary-border">S'inscrire</Link>
-        )                  
-   }
-    
-    else if(localStorage.getItem("authority") === "ROLE_ETUDIANT"){
-        if(inscription){
-            return (
-                <Button onClick={unsubscribe.bind(this,cours.id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
-                    Se désinscrire
-                </Button>
-                )
-        }
-        else{
-            return (
-            <Link onClick={subscribe.bind(this,cours.id )} className="btn genric-btn primary-border">
-                S'inscrire
-            </Link>
-            )
-        }
-    }
-    return null;
-}
-
-function RenderCours({ cours, prof, image, subscribe,unsubscribe, inscription, countSubscriptions }) {
-    
+function RenderCours({ cours, image, unsubscribe , countSubscriptions}) {
     return (
 
-        <div className=" col-lg-4 col-md-6 col-sm-6 " >
-            <div className="single-course mb-40">
-                <div className="course-img">
+        <div className=" col-lg-12 col-md-12 col-sm-12 " >
+            <div className="my-single-course mb-40 row align-items-center">
+                <div className="col-lg-3 col-md-12 col-sm-12">
                     {
                         image ?
                             <Image src={"data:image/*;base64," + image.data} alt={cours.nom} width="100%" height="100%" />
                             :
                             <Image src="assets/img/logo/icon-cours.jpg" alt={cours.nom} width="100%" height="100%" />
-                    }
-
-                </div>
-                <div className="course-caption">
+                    }                </div>
+                <div className="col-lg-6 col-md-12 col-sm-12 my-course-caption">
                     <div className="course-cap-top d-flex justify-content-between align-items-center">
-                        <h4>{cours.nom}</h4>
-                        <small className="align-items-center"><FolderOpenOutlinedIcon style={{color :"#4CD3E3"}}/>&nbsp;{cours.categorie}</small>
+                        <h1>{cours.nom}</h1>
+                        <div className="align-items-center"><FolderOpenOutlinedIcon style={{ color: "#4CD3E3" }} />&nbsp;{cours.categorie}</div>
                     </div>
-                    <div className="course-cap-mid justify-content-between align-items-center">
+
+                    <div className="my-course-cap-mid justify-content-between ">
 
                         <ul>
-                            {   
-                            localStorage.getItem("authority") === "ROLE_PROFESSEUR"?
-                                <li><Link to={"/listeinscrits/"+cours.id}>{countSubscriptions +" inscrits."}</Link></li>
-                                :
-                                <li>{countSubscriptions +" inscrits."}</li>
-                            }
-                            
-                            
+                            <li>{countSubscriptions +" inscrits."}</li>
                             <li>{cours.description}.</li>
                         </ul>
-                        <ul>
-                            <li><strong>Par: </strong><a href="#link">{prof.nom + ' ' + prof.prenom + '.'}</a></li>
-                        </ul>
+                    </div>
 
-                    </div>
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="browse-btn2 text-center mt-50">
-                               <RenderUserActionByRole cours={cours} subscribe={subscribe} unsubscribe={unsubscribe} inscription={inscription} />
-                            </div>
-                        </div>
-                    </div>
                 </div>
+                <div className="col-lg-3 col-md-12 col-sm-12" style={{ textAlign: "center" }}>
+                   
+                    <Button onClick={unsubscribe.bind(this,cours.id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
+                        Se désinscrire
+                     </Button>
+
+                </div>
+
             </div>
         </div>
 
@@ -91,47 +51,32 @@ function RenderCours({ cours, prof, image, subscribe,unsubscribe, inscription, c
 
 
 
-export default class Cours extends React.Component {
+export default class MesCoursInscrits extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            cours: this.props.cours.cours,
+            inscription: this.props.inscriptions,
 
         }
     }
 
-    handleChage = (e) => {
-        let cours = this.props.cours.cours;
-        let professeur = [];
+    handleChange = (e) => {
+        let inscriptions = this.props.inscriptions;
+
 
         const target = e.target;
         const value = target.value;
-        const name = target.name;
 
-        if (name === "enseignant") { enseignant = value }
-        if (name === "categorie") { categorie = value }
-        if (enseignant !== "") {
-            professeur = this.props.professeurs.professeurs.filter((item) => item.nom.toLowerCase().includes(enseignant.toLowerCase()))[0];
-        }
-
-        if (enseignant === "" && categorie === "all") {
+        if (value === "all") {
             this.setState({
-                cours: this.props.cours.cours
+                inscription: this.props.inscriptions
             })
         }
 
         else {
             this.setState({
-                cours: cours.filter((item) => {
-                    if (professeur) {
-                        return parseInt(item.professeurId) === parseInt(professeur.iduser) || item.categorie === (categorie)
-                    }
-                    else {
-                        return null;
-                    }
-
-                })
+                inscription:  inscriptions.filter((item) => item.courId.categorie === value)
             })
         }
 
@@ -141,7 +86,7 @@ export default class Cours extends React.Component {
 
     render() {
 
-        if (this.props.coursLoading || this.props.profLoading || this.props.imageLoading || this.props.inscriptionLoading) {
+        if (this.props.inscriptionLoading || this.props.imageLoading) {
             return (
                 <div className="container">
                     <div className="row">
@@ -150,15 +95,13 @@ export default class Cours extends React.Component {
                 </div>
             );
         }
-        else if (this.props.courseFailed || this.props.profFailed || this.props.imageFailed || this.props.inscriptionFailed) {
+        else if (this.props.inscriptionFailed || this.props.imageFailed) {
             return (
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <h4>{this.props.cours.errMess}</h4>
-                            <h4>{this.props.professeurs.errMess}</h4>
-                            <h4>{this.props.image.errMess}</h4>
                             <h4>{this.props.subscription.errMess}</h4>
+                            <h4>{this.props.image.errMess}</h4>
                         </div>
                     </div>
                 </div>
@@ -173,7 +116,7 @@ export default class Cours extends React.Component {
                                 <div className="row">
                                     <div className="col-xl-12">
                                         <div className="hero-cap hero-cap2 text-center">
-                                            <h2>Tous Les Cours</h2>
+                                            <h2>Mes Cours Inscrits</h2>
                                         </div>
                                     </div>
                                 </div>
@@ -192,7 +135,7 @@ export default class Cours extends React.Component {
                                                     <div className="row nav nav-tabs" id="nav-tab" role="tablist" style={{ paddingBottom: 20, justifyContent: "center" }}>
                                                         <div className="input-group-icon mt-10 col-lg-4">
                                                             <div className="" id="default-select" style={{ boxShadow: "0 0 10px rgba(0,0,0,0.3)", borderRadius: 3 }}>
-                                                                <select className="form-control" name="categorie" defaultValue="all" onChange={this.handleChage}>
+                                                                <select className="form-control" name="categorie" defaultValue="all" onChange={this.handleChange}>
                                                                     <option value="all">Toutes les catégories</option>
                                                                     <option value="Marketing">Marketing</option>
                                                                     <option value="Développement">Développement</option>
@@ -205,10 +148,7 @@ export default class Cours extends React.Component {
                                                             </div>
 
                                                         </div>
-                                                        <div className="mt-10 col-lg-4" >
-                                                            <input type="text" name="enseignant" placeholder="Chercher d'enseignant par nom" onChange={this.handleChage}
-                                                                className="form-control" style={{ boxShadow: "0 0 10px rgba(0,0,0,0.3)", borderRadius: 3 }} />
-                                                        </div>
+
 
                                                     </div>
 
@@ -222,18 +162,13 @@ export default class Cours extends React.Component {
 
                                             <div className="row">
                                                 {
-                                                    this.state.cours.length > 0 ?
-                                                        this.state.cours.map((item) => {
-                                                            
+                                                    this.state.inscription.length > 0 ?
+                                                        this.state.inscription.map((item) => {
                                                             return (
-
-                                                                <RenderCours cours={item}
-                                                                    prof={this.props.professeurs.professeurs.filter((p) => parseInt(p.iduser) === parseInt(item.professeurId))[0]}
-                                                                    image={this.props.images.images.filter((img) => parseInt(img.id) === parseInt(item.imageId))[0]}
-                                                                    subscribe={this.props.subscribe}
-                                                                    unsubscribe={this.props.unsubscribe}
-                                                                    inscription={this.props.inscriptions.filter((SubItem) => SubItem.courId.id === item.id )[0]}
-                                                                    countSubscriptions={this.props.totalSubscription.filter((SubItem) => SubItem.courId.id === item.id).length}
+                                                                <RenderCours cours={item.courId}
+                                                                    image={this.props.images.images.filter((img) => parseInt(img.id) === parseInt(item.courId.imageId))[0]}
+                                                                    unsubscribe = {this.props.unsubscribe}
+                                                                    countSubscriptions={this.props.totalSubscription.filter((SubItem) => SubItem.courId.id === item.courId.id).length}
                                                                 />
                                                             );
                                                         })
@@ -243,7 +178,6 @@ export default class Cours extends React.Component {
                                                             Aucun résultat.
                                                             </Typography>
                                                         </Container>
-                                                        
                                                 }
                                             </div>
 

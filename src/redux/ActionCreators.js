@@ -7,73 +7,9 @@ const createHistory = require("history").createBrowserHistory;
 let history = createHistory();
 
 
-export const profFailed = (errmess) => ({
-  type: ActionTypes.FAILED_PROF,
-  payload: errmess
-});
-export const profLoading = () => ({
-  type: ActionTypes.LOADING_PROF
-});
-export const addProf = (prof) => ({
-  type: ActionTypes.ADD_PROF,
-  payload: prof
-});
-
-export const getAllProfessors = () => (dispatch) => {
-  
-
-  dispatch(profLoading());
-
-  return axios.get(service_utilisateur_baseUrl+"users/professors")
-  .then((response) => {
-      if(response){
-        dispatch(addProf(response.data));
-        return response.data;
-      }
-      else {
-        var error = new Error('Error ' + response.status + ': ' + response.statusText);
-        error.response = response;
-        throw error;
-      }
-    })
-    .catch(error => dispatch(profFailed(error.message)));
-    
-}
-
-
-export const imageFailed = (errmess) => ({
-  type: ActionTypes.FAILED_IMAGE,
-  payload: errmess
-});
-export const imageLoading = () => ({
-  type: ActionTypes.LOADING_IMAGE
-});
-export const addImage = (img) => ({
-  type: ActionTypes.ADD_IMAGE,
-  payload: img
-});
-
-export const getImages = () => (dispatch) => {
-  
-
-  dispatch(imageLoading());
-
-  return axios.get(service_image_baseUrl+"images/All")
-  .then((response) => {
-      if(response){
-        dispatch(addImage(response.data));
-        return response.data;
-      }
-      else {
-        var error = new Error('Error ' + response.status + ': ' + response.statusText);
-        error.response = response;
-        throw error;
-      }
-    })
-    .catch(error => dispatch(imageFailed(error.message)));
-    
-}
-
+/********************************
+      Partie Utilisateur
+*********************************/
 
 
 export const postUser = (email, password, role, nom, prenom, adresse, tel,image) => (dispatch) => {
@@ -199,7 +135,79 @@ export const logout = () => (dispatch) => {
           },2000)
 }
 
+export const profFailed = (errmess) => ({
+  type: ActionTypes.FAILED_PROF,
+  payload: errmess
+});
+export const profLoading = () => ({
+  type: ActionTypes.LOADING_PROF
+});
+export const addProf = (prof) => ({
+  type: ActionTypes.ADD_PROF,
+  payload: prof
+});
 
+export const getAllProfessors = () => (dispatch) => {
+  
+
+  dispatch(profLoading());
+
+  return axios.get(service_utilisateur_baseUrl+"users/professors")
+  .then((response) => {
+      if(response){
+        dispatch(addProf(response.data));
+        return response.data;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    })
+    .catch(error => dispatch(profFailed(error.message)));
+    
+}
+
+export const studentsFailed = (errmess) => ({
+  type: ActionTypes.FAILED_ETUDIANT,
+  payload: errmess
+});
+export const studentsLoading = () => ({
+  type: ActionTypes.LOADING_ETUDIANT
+});
+export const addStudents = (student) => ({
+  type: ActionTypes.ADD_ETUDIANT,
+  payload: student
+});
+
+export const getAllStudents = () => (dispatch) => {
+  
+
+  dispatch(studentsLoading());
+
+  return axios.get(service_utilisateur_baseUrl+"users/students")
+  .then((response) => {
+      if(response){
+        dispatch(addStudents(response.data));
+        return response.data;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    })
+    .catch(error => dispatch(studentsFailed(error.message)));
+    
+}
+
+
+
+
+
+/********************************
+          Partie Cours
+*********************************/
 export const postCourse =  (titre, dateDeb, dateFin, categorie,image,description) => (dispatch) => {
   const headers = new Headers();
   headers.append('Content-Type', 'multipart/form-data');
@@ -317,7 +325,17 @@ export const addCourse = (course) => ({
   payload: course
 });
 
-
+export const subscriptionLoading = () => ({
+  type: ActionTypes.LOADING_SUBSCRIBE
+});
+export const subscriptionFailed = (errmess) => ({
+  type: ActionTypes.FAILED_SUBSCRIBE,
+  payload: errmess
+});
+export const addsubscription = (sub) => ({
+  type: ActionTypes.ADD_SUBSCRIBE,
+  payload: sub
+});
 
 export const getAllCourses = () => (dispatch) => {
   
@@ -386,7 +404,7 @@ export const subscribe = (id) => (dispatch) => {
             timeout: 'none'});
 
           setTimeout(()=>{
-            history.push('/mescours');
+            history.push('/coursinscrits');
             window.location.reload(false)
           },2000)
           return response.data;
@@ -405,6 +423,99 @@ export const subscribe = (id) => (dispatch) => {
         timeout: 'none'});
       });
     
+    
+}
+
+export const unsubscribe = (id) => (dispatch) => {
+
+  if (window.confirm("Etes-vous sûre de vouloir se désinscrire de ce cours ?")) {
+
+    return axios.delete(service_cours_baseUrl+"courses/unsubscribe/"+localStorage.getItem("username")+"/"+id)
+    .then((response) => {
+        if(response.data === "Desinscription réussie"){
+          Alert.success('Désinscription réussie.', {
+            position: 'bottom-left',
+            effect: 'stackslide',
+            timeout: 'none'});
+            setTimeout(()=>{
+              window.location.reload(false)
+            },2000)
+          
+          return response.data;
+        }
+        else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      })
+      .catch(error => {
+        console.log('post course', error);
+        Alert.error('Problème dans le serveur ou Vous n\'êtes pas autorisé.', {
+        position: 'bottom-left',
+        effect: 'stackslide',
+        timeout: 'none'});
+      });
+  
+  }
+}
+
+export const getSubscriptions = () => (dispatch) => {
+  
+  dispatch(subscriptionLoading());
+
+  return axios.get(service_cours_baseUrl+"courses/inscription/All")
+  .then((response) => {
+      if(response){
+        
+        dispatch(addsubscription(response.data));
+        return response.data;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    })
+    .catch(error => dispatch(subscriptionFailed(error.message)));
+    
+}
+
+
+/********************************
+          Partie Image
+*********************************/
+
+export const imageFailed = (errmess) => ({
+  type: ActionTypes.FAILED_IMAGE,
+  payload: errmess
+});
+export const imageLoading = () => ({
+  type: ActionTypes.LOADING_IMAGE
+});
+export const addImage = (img) => ({
+  type: ActionTypes.ADD_IMAGE,
+  payload: img
+});
+
+export const getImages = () => (dispatch) => {
+  
+
+  dispatch(imageLoading());
+
+  return axios.get(service_image_baseUrl+"images/All")
+  .then((response) => {
+      if(response){
+        dispatch(addImage(response.data));
+        return response.data;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    })
+    .catch(error => dispatch(imageFailed(error.message)));
     
 }
 
