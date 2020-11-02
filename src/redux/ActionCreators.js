@@ -147,6 +147,18 @@ export const addProf = (prof) => ({
   payload: prof
 });
 
+export const studentsFailed = (errmess) => ({
+  type: ActionTypes.FAILED_ETUDIANT,
+  payload: errmess
+});
+export const studentsLoading = () => ({
+  type: ActionTypes.LOADING_ETUDIANT
+});
+export const addStudents = (student) => ({
+  type: ActionTypes.ADD_ETUDIANT,
+  payload: student
+});
+
 export const getAllProfessors = () => (dispatch) => {
   
 
@@ -168,17 +180,7 @@ export const getAllProfessors = () => (dispatch) => {
     
 }
 
-export const studentsFailed = (errmess) => ({
-  type: ActionTypes.FAILED_ETUDIANT,
-  payload: errmess
-});
-export const studentsLoading = () => ({
-  type: ActionTypes.LOADING_ETUDIANT
-});
-export const addStudents = (student) => ({
-  type: ActionTypes.ADD_ETUDIANT,
-  payload: student
-});
+
 
 export const getAllStudents = () => (dispatch) => {
   

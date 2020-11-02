@@ -3,40 +3,51 @@ import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 const styles = StyleSheet.create({
     page: {
         fontSize: 11,
-        backgroundColor: 'white'
-    },
-    section: {
-        margin: 10,
-        padding: 10,
-        flexGrow: 1
+        backgroundColor: 'white',
+        padding:20,
+        
     },
     Container: {
         backgroundColor: "white",
         flexDirection: "row",
         display: "flex",
         justifyContent: "space-between",
-        padding: 20
+        padding: 20,
+        borderWidth: 1,
+        borderColor: '#000',
+        borderStyle: 'solid',
     },
     Details: {
         flexDirection: "column",
         marginLeft: 5,
-        borderWidth: 1,
-        borderColor: '#112131',
-        borderStyle: 'solid',
+        borderLeftWidth: 1,
+        borderLeftColor: '#112131',
+        borderLeftStyle: 'solid',
+        
         
     },
     elements:{
         marginBottom: 5,
-        borderBottomWidth: 1,
         padding: 10,
     },
     titleElement:{
         marginBottom: 10,
         fontWeight: "bold",
         padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#112131',
-        borderBottomStyle: 'solid',
+    },
+    Title:{
+        flexDirection: "column",
+        textAlign: "center",
+        fontSize: 20,
+        
+        
+    },
+    SubTitle:{
+        flexDirection: "column",
+        textAlign: "center",
+        fontSize: 12,
+        marginBottom: 20
+        
     }
 });
 
@@ -45,11 +56,14 @@ export default class DocumentEtudiantsInscrits extends React.Component {
     render() {
         return (
             <Document>
+
                 <Page size="A4" style={styles.page} >
+                            <Text style={styles.Title}>Liste des étudiants inscrits</Text>
+                            <Text style={styles.SubTitle}>~{"Cours: "+ this.props.inscriptions[0].courId.nom}~</Text>
                     
                         {this.props.inscriptions?
                             <View style={styles.Container} >
-
+                                        
                                         
                                         <View style={styles.Details}>
                                             <Text style={styles.titleElement}>Nom</Text>

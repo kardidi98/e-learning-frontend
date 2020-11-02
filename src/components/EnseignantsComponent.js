@@ -36,7 +36,7 @@ export default class Enseignants extends React.Component {
         }
     }
 
-    handleChage = (e) => {
+    handleChange = (e) => {
 
         const target = e.target;
         const value = target.value;
@@ -102,7 +102,7 @@ export default class Enseignants extends React.Component {
                                         <div className="row nav nav-tabs" id="nav-tab" role="tablist" style={{ paddingBottom: 20, justifyContent: "center" }}>
 
                                             <div className="mt-10 col-lg-4" >
-                                                <input type="text" name="enseignant" placeholder="Charcher un enseignant par nom .." onChange={this.handleChage}
+                                                <input type="text" name="enseignant" placeholder="Charcher un enseignant par nom .." onChange={this.handleChange}
                                                     className="form-control" style={{ boxShadow: "0 0 10px rgba(0,0,0,0.3)", borderRadius: 3 }} />
                                             </div>
 

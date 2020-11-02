@@ -60,7 +60,7 @@ function RenderCours({ cours, prof, image, subscribe,unsubscribe, inscription, c
 
                         <ul>
                             {   
-                            localStorage.getItem("authority") === "ROLE_PROFESSEUR"?
+                            (localStorage.getItem("authority") === "ROLE_PROFESSEUR" && localStorage.getItem("username") === prof.email) ?
                                 <li><Link to={"/listeinscrits/"+cours.id}>{countSubscriptions +" inscrits."}</Link></li>
                                 :
                                 <li>{countSubscriptions +" inscrits."}</li>
@@ -101,7 +101,7 @@ export default class Cours extends React.Component {
         }
     }
 
-    handleChage = (e) => {
+    handleChange = (e) => {
         let cours = this.props.cours.cours;
         let professeur = [];
 
@@ -192,7 +192,7 @@ export default class Cours extends React.Component {
                                                     <div className="row nav nav-tabs" id="nav-tab" role="tablist" style={{ paddingBottom: 20, justifyContent: "center" }}>
                                                         <div className="input-group-icon mt-10 col-lg-4">
                                                             <div className="" id="default-select" style={{ boxShadow: "0 0 10px rgba(0,0,0,0.3)", borderRadius: 3 }}>
-                                                                <select className="form-control" name="categorie" defaultValue="all" onChange={this.handleChage}>
+                                                                <select className="form-control" name="categorie" defaultValue="all" onChange={this.handleChange}>
                                                                     <option value="all">Toutes les catégories</option>
                                                                     <option value="Marketing">Marketing</option>
                                                                     <option value="Développement">Développement</option>
@@ -200,13 +200,13 @@ export default class Cours extends React.Component {
                                                                     <option value="AI">AI</option>
                                                                     <option value="BI">BI</option>
                                                                     <option value="Langues">Langues</option>
-                                                                    <option value="Langues">DevOps</option>
+                                                                    <option value="DevOps">DevOps</option>
                                                                 </select>
                                                             </div>
 
                                                         </div>
                                                         <div className="mt-10 col-lg-4" >
-                                                            <input type="text" name="enseignant" placeholder="Chercher d'enseignant par nom" onChange={this.handleChage}
+                                                            <input type="text" name="enseignant" placeholder="Chercher l'enseignant par nom" onChange={this.handleChange}
                                                                 className="form-control" style={{ boxShadow: "0 0 10px rgba(0,0,0,0.3)", borderRadius: 3 }} />
                                                         </div>
 

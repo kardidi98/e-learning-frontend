@@ -5,7 +5,7 @@ export const Loading = () => {
     return(
         <div className="col-12" style={{textAlign: "center"}}>
             <CircularProgress />
-            <p style={{textAlign: "center"}}>Loading . . .</p>
+            <p style={{textAlign: "center"}}>Téléchargement . . .</p>
         </div>
     );
 };
