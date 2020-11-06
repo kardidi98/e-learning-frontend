@@ -13,12 +13,9 @@ function RenderCours({ cours, image, unsubscribe , countSubscriptions}) {
         <div className=" col-lg-12 col-md-12 col-sm-12 " >
             <div className="my-single-course mb-40 row align-items-center">
                 <div className="col-lg-3 col-md-12 col-sm-12">
-                    {
-                        image ?
+                    
                             <Image src={"data:image/*;base64," + image.data} alt={cours.nom} width="100%" height="100%" />
-                            :
-                            <Image src="assets/img/logo/icon-cours.jpg" alt={cours.nom} width="100%" height="100%" />
-                    }                </div>
+                 </div>
                 <div className="col-lg-6 col-md-12 col-sm-12 my-course-caption">
                     <div className="course-cap-top d-flex justify-content-between align-items-center">
                         <h1>{cours.nom}</h1>

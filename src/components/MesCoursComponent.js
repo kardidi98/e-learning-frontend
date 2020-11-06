@@ -15,12 +15,9 @@ function RenderCours({ cours, image, deleteCourse, countSubscriptions }) {
         <div className=" col-lg-12 col-md-12 col-sm-12 " >
             <div className="my-single-course mb-40 row align-items-center">
                 <div className="col-lg-3 col-md-12 col-sm-12">
-                    {
-                        image?
+                    
                         <Image src={"data:image/*;base64," + image.data} alt={cours.nom} width="100%" height="100%"/>
-                        :
-                        <Image src="assets/img/logo/icon-cours.jpg" alt={cours.nom} width="100%" height="100%"/>                    
-                    }                </div>
+                 </div>
                 <div className="col-lg-7 col-md-12 col-sm-12 my-course-caption">
                     <div className="course-cap-top d-flex justify-content-between align-items-center">
                         <h1>{cours.nom}</h1>
@@ -41,12 +38,24 @@ function RenderCours({ cours, image, deleteCourse, countSubscriptions }) {
 
                 </div>
                 <div className="col-lg-2 col-md-12 col-sm-12" style={{textAlign: "center"}}>
-                        <Link to={"/editercours/" + cours.id} >
-                            <IconButton aria-label="Edit" title="Edit"><EditOutlinedIcon style={{ color: '#2196F3' }} /></IconButton>
-                        </Link>
-                        <Link onClick={deleteCourse.bind(this,cours.id)}>
-                            <IconButton aria-label="Delete" title="Delete"><DeleteOutlineOutlinedIcon style={{ color: '#F44336' }} /></IconButton>
-                        </Link>
+                    {
+                        countSubscriptions === 0?
+                        <div>
+                            <Link to={"/editercours/" + cours.id}  >
+                                <IconButton aria-label="Edit" title="Edit"><EditOutlinedIcon style={{ color: '#2196F3' }}/></IconButton>
+                            </Link>
+                            <Link onClick={deleteCourse.bind(this,cours.id)}>
+                                <IconButton aria-label="Delete" title="Delete"><DeleteOutlineOutlinedIcon style={{ color: '#F44336' }} /></IconButton>
+                            </Link>
+                        </div>
+                        :
+                        <div>
+                            <IconButton aria-label="Edit" title="Edit" disabled  ><EditOutlinedIcon /></IconButton>
+                            <IconButton aria-label="Delete" title="Delete" disabled  ><DeleteOutlineOutlinedIcon /></IconButton>
+                        </div>
+                    }
+                    
+                        
                         
                 </div>
 

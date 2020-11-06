@@ -66,6 +66,52 @@ export const postUser = (email, password, role, nom, prenom, adresse, tel,image)
     }); 
 };
 
+export const updateUser = (id,email,role, nom, prenom, adresse, tel,image) => (dispatch) => {
+  const headers = new Headers();
+  headers.append('Content-Type', 'multipart/form-data');
+  
+  const updatedUser = {
+    id:id,
+    email: email,
+    role: role,
+    nom: nom,
+    prenom: prenom,
+    adresse: adresse,
+    tel: tel
+  };
+
+
+  const formData = new FormData();
+  if(image){
+    formData.append('image',image[0]);
+  }
+  formData.append('utilisateur', new Blob([JSON.stringify(updatedUser)], { type: "application/json" }));
+  return axios.put(service_utilisateur_baseUrl+"users/update/"+id,formData,headers)
+  .then((response)=>{
+    
+    if(response.data === "MAJ réussie."){
+        
+        Alert.success('La mise à jour du profile est réussie.', {
+          position: 'bottom-left',
+          effect: 'stackslide',
+          timeout: 'none'});
+
+        setTimeout(()=>{
+          window.location.reload(false)
+        },2000)
+      return response
+    }
+    
+  })
+  .catch(error => {
+     console.log('post user', error.message);
+     Alert.error('Problème dans le serveur ou Vous n\'êtes pas autorisé.', {
+      position: 'bottom-left',
+      effect: 'stackslide',
+      timeout: 'none'});
+    }); 
+};
+
 
 export const loginUser = (email, password) => (dispatch) => {
   const headers = new Headers();

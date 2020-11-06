@@ -81,17 +81,18 @@ export default class Header extends React.Component {
                                                                 <span className="caret"></span>
                                                             </Link>
                                                             <ul className="dropdown-menu" >
-                                                                
+                                                                <li><Link to="/profile" style={{textDecoration: 'none'}}>Mon Profile</Link></li>
+                                                                <hr/>
                                                                 <li><Link to={this.state.authority === "ROLE_PROFESSEUR" ? "/mescours":"/coursinscrits"} style={{textDecoration: 'none'}}>Mes Cours</Link></li>
                                                                 <hr/>
                                                                 <li><a href='#logout' onClick={()=>this.logOut()} style={{textDecoration: 'none'}}>Déconnexion</a></li>
-                                                            
+                                                                
+                                                                
                                                             </ul>
                                                         </li>
                                                     </ul>
                                                     :
                                                     <ul>
-                                                        <li><Link to="/connexion" style={{ textDecoration: "none" }} className="genric-btn success-border circle">Ajouter Un Cours</Link></li>
                                                         <li ><Link to="/connexion" style={{ textDecoration: "none" }}><PersonOutlinedIcon style={{color: "#4044B4"}}/>Se connecter</Link></li>
                                                         <li><Link to="/inscription" style={{ textDecoration: "none" }}><LockOutlinedIcon style={{color: "#4044B4"}}/>S'inscrire</Link></li>
                                                     </ul>

@@ -1,4 +1,5 @@
 export const InitialUserRegister = {
+    id: "",
     email: "",
     password: "",
     role: "",
@@ -6,8 +7,8 @@ export const InitialUserRegister = {
     prenom: "",
     adresse: "",
     tel: 0,
-    image: []
 };
+
 
 export const InitialUserLogin = {
     email: "",

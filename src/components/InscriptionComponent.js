@@ -8,22 +8,19 @@ const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val
 export default class Inscription extends React.Component{
     constructor(props) {
         super(props);
-               
-
-        this.handleSubmit = this.handleSubmit.bind(this);
+        
+         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
     
     handleSubmit(values) {
         
-        this.props.postUser(values.email, values.password,
-            values.role, values.nom, values.prenom, values.adresse,
-             values.tel, values.image);
-        
-        this.props.resetUserForm();
-        
-        // event.preventDefault();
+         this.props.postUser(values.email, values.password,
+         values.role, values.nom, values.prenom, values.adresse,
+         values.tel, values.image);
+         this.props.resetUserForm();
     }
+
     render(){
             return(
                 <main>
@@ -106,17 +103,18 @@ export default class Inscription extends React.Component{
                                     </div>
                                     <div className="col-sm-12">
                                             <div className="form-group">
-                                                <Control.select model=".role" name="role" defaultValue="ROLE_ETUDIANT"  required
+                                                <Control.select model=".role" name="role" defaultValue="ROLE_PROFESSEUR"  required
                                                     className="form-control">
-                                                    <option value="ROLE_ETUDIANT">Etudiant</option>
                                                     <option value="ROLE_PROFESSEUR">Enseignant</option>
+                                                    <option value="ROLE_ETUDIANT">Etudiant</option>
+                                                    
                                                 </Control.select>
                                             </div>
                                     </div>
                                     <div className="col-sm-12">
                                         <div className=" form-group">
                                                 <label for="image">
-                                                    <div className="genric-btn default justify-content-center" $
+                                                    <div className="genric-btn default justify-content-center"
                                                             style={{border: "1px solid #E5E6E9"}}>
                                                         <i className="fa fa-upload" style={{color: "#2D3092"}}></i>
                                                         &nbsp;Inserer Votre Image De Profile Ici

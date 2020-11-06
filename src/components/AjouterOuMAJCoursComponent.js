@@ -8,11 +8,12 @@ export default class AjouterOuMAJCours extends React.Component{
         super(props);
         this.state = {
             cours: [],
-            image: []
+            image: [],
+            showError: "false"
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
-
+        this.handleChangeImage = this.handleChangeImage.bind(this);
     }
 
     componentDidMount(){
@@ -29,17 +30,32 @@ export default class AjouterOuMAJCours extends React.Component{
     }
 
     handleSubmit = (values) =>{
-        this.props.postCourse(values.nom, values.dateDeb, values.dateFin, values.categorie,values.image,values.description);
-        this.props.resetCourseForm();
+        if(values.image){
+            this.props.postCourse(values.nom, values.dateDeb, values.dateFin, values.categorie,values.image,values.description);
+            this.props.resetCourseForm();
+          
+        }
+        else{
+            this.setState({
+                showError: "true"
+            })
+           
+        }
+        
         
     }
     handleUpdate = (values) =>{
         this.props.updateCourse(values.id, values.nom, values.dateDeb, values.dateFin, values.categorie,values.image,values.description);
     }
     
+    handleChangeImage = (e) =>{
+        this.setState({
+            showError: "false"
+        })
+    }
 
     render(){
-        const {cours, image}=this.state;
+        const {cours, image, showError}=this.state;
         return(
             <main>
                 <div className="slider-area ">
@@ -111,10 +127,7 @@ export default class AjouterOuMAJCours extends React.Component{
                                                                     <option value="Langues">Langues</option>
                                                                     <option value="Langues">DevOps</option>
                                                                 </Control.select>
-                                                                
-
-                                                            
-                                                            
+                                              
                                                         </div>
                                                 </div>
                                                 <div className="col-sm-6 form-group">
@@ -128,7 +141,8 @@ export default class AjouterOuMAJCours extends React.Component{
                                                             }
                                                         </div>
                                                     </label>
-                                                    <Control.file className="form-control " model=".image" name="image" id="image" accept="image/*" hidden="true"/>
+                                                    <Control.file className="form-control " model=".image"  onChange={this.handleChangeImage}
+                                                      name="image" id="image" accept="image/*" hidden="true"/>
                                                     {
                                                         image.length === 0? 
                                                         
@@ -142,6 +156,9 @@ export default class AjouterOuMAJCours extends React.Component{
                                                         
                                                         
                                                     }
+                                                    <small style={{color : "#F44336", display : showError ==="true"? "block":"none"}}>
+                                                        Vous devez insérer un image.
+                                                    </small>
                                                     
                                                 </div>
                                             </div>

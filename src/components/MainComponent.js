@@ -3,7 +3,7 @@ import { Switch, Route, Redirect,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postUser,loginUser, logout,postCourse,getAllCourses,getAllProfessors
   ,getImages, updateCourse,deleteCourse, subscribe ,getSubscriptions
-  , getAllStudents, unsubscribe} from '../redux/ActionCreators';
+  , getAllStudents, unsubscribe, updateUser} from '../redux/ActionCreators';
 import {InitialCours } from '../redux/forms';
 import { actions } from 'react-redux-form';
 import Header from './HeaderComponent';
@@ -20,6 +20,7 @@ import Footer from './FooterComponent';
 import Alert from 'react-s-alert';
 import EtudiantsInscrits from './EtudiantsInscritsComponent';
 import MesCoursInscrits from './MesCoursInscritsComponent';
+import Profile from './ProfileComponent';
 
 
 const mapStateToProps = state => {
@@ -34,9 +35,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     logout: () => dispatch(logout()),
     postUser: (email, password, role, nom, prenom, adresse, tel,image) => dispatch(postUser(email, password, role, nom, prenom, adresse, tel,image)),
+    updateUser: (id,email,  role, nom, prenom, adresse, tel,image) => dispatch(updateUser(id,email,  role, nom, prenom, adresse, tel,image)),
     resetUserForm: () => { dispatch(actions.reset('user'))},
     loginUser: (email, password) => dispatch(loginUser(email, password)),
     resetUserLoginForm: () => { dispatch(actions.reset('login'))},
+    changeUserForm: (model, value) => {dispatch(actions.change(model, value))},
     postCourse:  (titre, dateDeb, dateFin, categorie,image,description) => dispatch(postCourse(titre, dateDeb, dateFin, categorie,image,description)),
     updateCourse:  (id, titre, dateDeb, dateFin, categorie,image,description) => dispatch(updateCourse(id,titre, dateDeb, dateFin, categorie,image,description)),
     resetCourseForm: () => {dispatch(actions.reset("course"))},
@@ -255,6 +258,47 @@ const mapDispatchToProps = dispatch => ({
               }
               
             };
+
+            const MyProfile = () => {
+              if(localStorage.getItem("authority") === null){
+                  return (
+                    <Redirect to="/connexion"/>
+                  )
+                 
+              }
+              else {
+                
+                let me = [];
+                if(localStorage.getItem("authority") === "ROLE_ETUDIANT") {
+                  me = Object.assign({},this.props.etudiants.etudiants.filter((item) => item.email === this.state.username)[0]);
+                }
+                else{
+                  me = Object.assign({},this.props.professeurs.professeurs.filter((item) => item.email === this.state.username)[0]);
+                  }
+                let image = Object.assign({},this.props.images.images.filter((item) => item.id === me.idimage)[0]);
+                const InitialUserProfile = {
+                    id: me.iduser,
+                    email: me.email,
+                    role: me.role,
+                    nom: me.nom,
+                    prenom: me.prenom,
+                    adresse: me.adresse,
+                    tel: me.tel
+                };
+                this.props.changeUserForm("user",InitialUserProfile)
+                return(
+                    
+                      <Profile update={this.props.updateUser}
+                            user={me}
+                            usersLoading = {this.props.etudiants.isLoading}
+                            usersFailed = {this.props.etudiants.errMess}
+                            image = {image}
+                            imagesLoading = {this.props.images.isLoading}
+                            imagesFailed = {this.props.images.errMess}
+                      />
+                    );  
+              }
+            };
            
          return (
             <div >
@@ -272,6 +316,7 @@ const mapDispatchToProps = dispatch => ({
                         <Route path="/listeinscrits/:coursId" exact component={ListStudents}></Route>
                         <Route path="/enseignants" exact component={Professors}></Route>
                         <Route path="/inscription" exact component={SignUp}></Route>
+                        <Route path="/profile" exact component={MyProfile}></Route>
                         <Route path="/connexion" exact component={LogIn}></Route>
                         <Redirect to="/accueil"/>
                 </Switch>
