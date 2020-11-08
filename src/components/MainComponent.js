@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postUser,loginUser, logout,postCourse,getAllCourses,getAllProfessors
+import { postUser,loginUser, logout,postCourse,getAllCourses,getCoursesByKeyWord,getAllProfessors
   ,getImages, updateCourse,deleteCourse, subscribe ,getSubscriptions
   , getAllStudents, unsubscribe, updateUser} from '../redux/ActionCreators';
 import {InitialCours } from '../redux/forms';
@@ -21,12 +21,14 @@ import Alert from 'react-s-alert';
 import EtudiantsInscrits from './EtudiantsInscritsComponent';
 import MesCoursInscrits from './MesCoursInscritsComponent';
 import Profile from './ProfileComponent';
+import ResultatRecherche from "./ResearchResultComponent";
 
 
 const mapStateToProps = state => {
     return {
       etudiants: state.etudiants,
       cours : state.cours,
+      resultatRechercheCours: state.resultatRechercheCours,
       professeurs: state.professeurs,
       images: state.images,
       subscription: state.subscription
@@ -49,6 +51,7 @@ const mapDispatchToProps = dispatch => ({
     unsubscribe: (id) => {dispatch(unsubscribe(id))},
     getSubscriptions: (coursId) => dispatch(getSubscriptions(coursId)),
     getAllCourses: () => {dispatch(getAllCourses())},
+    getCoursesByKeyWord: (keyword) => {dispatch(getCoursesByKeyWord(keyword))},
     getAllProfessors: () => {dispatch(getAllProfessors())},
     getAllStudents: () => {dispatch(getAllStudents())},
     getImages: () => {dispatch(getImages())},
@@ -71,6 +74,7 @@ const mapDispatchToProps = dispatch => ({
     this.props.getAllStudents();
     this.props.getImages();
     this.props.getSubscriptions();
+    this.props.getCoursesByKeyWord(localStorage.getItem("keyword"))
     if(localStorage.getItem("username") && localStorage.getItem("authority")){
           this.setState({
               username : localStorage.getItem("username"),
@@ -82,6 +86,29 @@ const mapDispatchToProps = dispatch => ({
   }
       
     render(){
+        const Home = () =>{
+        
+          let me = Object.assign({},this.props.etudiants.etudiants.filter((item) => item.email === this.state.username)[0]);
+
+          return(
+            <Accueil totalSubscription={this.props.subscription.subscription}
+            unsubscribe = {this.props.unsubscribe}
+            inscriptions = {this.props.subscription.subscription.filter((item) => item.etudiantId === me.iduser)}
+            inscriptionLoading = {this.props.subscription.isLoading}
+            inscriptionFailed = {this.props.subscription.errMess}
+            cours = {this.props.cours.cours}
+            coursLoading = {this.props.cours.isLoading}
+            courseFailed = {this.props.cours.errMess}
+            professeurs={this.props.professeurs}
+            profLoading = {this.props.professeurs.isLoading}
+            profFailed = {this.props.professeurs.errMess}
+            images = {this.props.images}
+            imageLoading = {this.props.images.isLoading}
+            imageFailed = {this.props.images.errMess}
+            subscribe={this.props.subscribe}
+            />
+          )
+        }
         const SignUp = () => {
             return(
               <Inscription postUser={this.props.postUser} resetUserForm={this.props.resetUserForm}/>
@@ -121,7 +148,30 @@ const mapDispatchToProps = dispatch => ({
                        inscriptionFailed = {this.props.subscription.errMess}
                        cours = {this.props.cours}
                        coursLoading = {this.props.cours.isLoading}
-                       coursFailed = {this.props.cours.errMess}
+                       courseFailed = {this.props.cours.errMess}
+                       professeurs={this.props.professeurs}
+                       profLoading = {this.props.professeurs.isLoading}
+                       profFailed = {this.props.professeurs.errMess}
+                       images = {this.props.images}
+                       imageLoading = {this.props.images.isLoading}
+                       imageFailed = {this.props.images.errMess}
+                       subscribe={this.props.subscribe}
+                />
+              );
+            };
+            const SearchedCourses = () => {
+              
+              let me = Object.assign({},this.props.etudiants.etudiants.filter((item) => item.email === this.state.username)[0]);
+              return(
+                
+                <ResultatRecherche totalSubscription={this.props.subscription.subscription}
+                       unsubscribe = {this.props.unsubscribe}
+                       inscriptions = {this.props.subscription.subscription.filter((item) => item.etudiantId === me.iduser)}
+                       inscriptionLoading = {this.props.subscription.isLoading}
+                       inscriptionFailed = {this.props.subscription.errMess}
+                       resultatRechercheCours = {this.props.resultatRechercheCours}
+                       resultatRechercheCoursLoading = {this.props.resultatRechercheCours.isLoading}
+                       resultatRechercheCoursFailed = {this.props.resultatRechercheCours.errMess}
                        professeurs={this.props.professeurs}
                        profLoading = {this.props.professeurs.isLoading}
                        profFailed = {this.props.professeurs.errMess}
@@ -149,7 +199,7 @@ const mapDispatchToProps = dispatch => ({
                             deleteCourse={this.props.deleteCourse}
                             cours = {this.props.cours.cours.filter((item)=> item.professeurId === professeur.iduser)}
                             coursLoading = {this.props.cours.isLoading}
-                            coursFailed = {this.props.cours.errMess}
+                            courseFailed = {this.props.cours.errMess}
                             images = {this.props.images}
                             imageLoading = {this.props.images.isLoading}
                             imageFailed = {this.props.images.errMess}
@@ -210,7 +260,7 @@ const mapDispatchToProps = dispatch => ({
                       <AddOrUpdateCours resetCourseForm={this.props.resetCourseForm} updateCourse={this.props.updateCourse}
                             cours = {cours}
                             coursLoading = {this.props.cours.isLoading}
-                            coursFailed = {this.props.cours.errMess}
+                            courseFailed = {this.props.cours.errMess}
                             image = {this.props.images.images.filter((item)=> parseInt(item.id) === parseInt(cours.imageId))[0]}
                             imageLoading = {this.props.images.isLoading}
                             imageFailed = {this.props.images.errMess}
@@ -252,7 +302,7 @@ const mapDispatchToProps = dispatch => ({
                             etudiantsFailed = {this.props.cours.errMess}
                             cours = {this.props.cours.cours.filter((item)=> item.id === parseInt(match.params.coursId))[0]}
                             coursLoading = {this.props.cours.isLoading}
-                            coursFailed = {this.props.cours.errMess}
+                            courseFailed = {this.props.cours.errMess}
                       />
                     );  
               }
@@ -302,14 +352,15 @@ const mapDispatchToProps = dispatch => ({
            
          return (
             <div >
-                <Header logout={this.props.logout}/>
+                <Header logout={this.props.logout} getCoursesByKeyWord={this.props.getCoursesByKeyWord}/>
                 <Switch >
                         
-                        <Route path="/accueil" exact component={Accueil}></Route>
+                        <Route path="/accueil" exact component={Home}></Route>
                         <Route path="/apropos" exact component={About}></Route>
                         <Route path="/contact" exact component={Contact}></Route>
                         <Route path="/ajouterCours" exact component={addOrUpdateCourse}></Route>
                         <Route path="/cours" exact component={Courses}></Route>
+                        <Route path="/recherchecours" exact component={SearchedCourses}></Route>
                         <Route path="/mescours" exact component={MyCourses}></Route>
                         <Route path="/coursinscrits" exact component={MySubCourses}></Route>
                         <Route path="/editercours/:id" exact component={EditCourse}></Route>
@@ -319,6 +370,7 @@ const mapDispatchToProps = dispatch => ({
                         <Route path="/profile" exact component={MyProfile}></Route>
                         <Route path="/connexion" exact component={LogIn}></Route>
                         <Redirect to="/accueil"/>
+                        <Route path="/" component={Accueil}/>
                 </Switch>
                 <Alert stack={{limit: 3}} />
                 <Footer/>

@@ -43,9 +43,13 @@ function RenderCours({ cours, prof, image, subscribe,unsubscribe, inscription, c
         <div className=" col-lg-4 col-md-6 col-sm-6 " >
             <div className="single-course mb-40">
                 <div className="course-img">
-                   
+                    {
+                        image ?
                             <Image src={"data:image/*;base64," + image.data} alt={cours.nom} width="100%" height="100%" />
-                            
+                            :
+                            <Image src="assets/img/logo/icon-cours.jpg" alt={cours.nom} width="100%" height="100%" />
+                    }
+
                 </div>
                 <div className="course-caption">
                     <div className="course-cap-top d-flex justify-content-between align-items-center">
@@ -87,18 +91,18 @@ function RenderCours({ cours, prof, image, subscribe,unsubscribe, inscription, c
 
 
 
-export default class Cours extends React.Component {
+export default class ResultatRecherche extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            cours: this.props.cours.cours,
+            cours: this.props.resultatRechercheCours.resultatRechercheCours,
 
         }
     }
 
     handleChange = (e) => {
-        let cours = this.props.cours.cours;
+        let cours = this.props.resultatRechercheCours.resultatRechercheCours;
         let professeur = [];
 
         const target = e.target;
@@ -113,7 +117,7 @@ export default class Cours extends React.Component {
 
         if (enseignant === "" && categorie === "all") {
             this.setState({
-                cours: this.props.cours.cours
+                cours: this.props.resultatRechercheCours.resultatRechercheCours
             })
         }
 
@@ -137,7 +141,7 @@ export default class Cours extends React.Component {
 
     render() {
 
-        if (this.props.coursLoading || this.props.profLoading || this.props.imageLoading || this.props.inscriptionLoading) {
+        if (this.props.cresultatRechercheCoursLoading || this.props.profLoading || this.props.imageLoading || this.props.inscriptionLoading) {
             return (
                 <div className="container">
                     <div className="row">
@@ -146,15 +150,15 @@ export default class Cours extends React.Component {
                 </div>
             );
         }
-        else if (this.props.courseFailed || this.props.profFailed || this.props.imageFailed || this.props.inscriptionFailed) {
+        else if (this.props.resultatRechercheCoursFailed || this.props.profFailed || this.props.imageFailed || this.props.inscriptionFailed) {
             return (
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <h4>{this.props.cours.errMess}</h4>
-                            <h4>{this.props.professeurs.errMess}</h4>
-                            <h4>{this.props.image.errMess}</h4>
-                            <h4>{this.props.subscription.errMess}</h4>
+                            <h4>{this.props.resultatRechercheCoursFailed}</h4>
+                            <h4>{this.props.profFailed}</h4>
+                            <h4>{this.props.imageFailed}</h4>
+                            <h4>{this.props.inscriptionFailed}</h4>
                         </div>
                     </div>
                 </div>
@@ -169,7 +173,7 @@ export default class Cours extends React.Component {
                                 <div className="row">
                                     <div className="col-xl-12">
                                         <div className="hero-cap hero-cap2 text-center">
-                                            <h2>Tous Les Cours</h2>
+                                            <h2>{'Résultat de recherche de : "'+localStorage.getItem("keyword")+'"'}</h2>
                                         </div>
                                     </div>
                                 </div>

@@ -67,6 +67,12 @@ export const postUser = (email, password, role, nom, prenom, adresse, tel,image)
 };
 
 export const updateUser = (id,email,role, nom, prenom, adresse, tel,image) => (dispatch) => {
+
+  Alert.info('Mise à jour en cours...', {
+    position: 'bottom-left',
+    effect: 'stackslide',
+    timeout: 'none'});
+
   const headers = new Headers();
   headers.append('Content-Type', 'multipart/form-data');
   
@@ -308,6 +314,11 @@ export const postCourse =  (titre, dateDeb, dateFin, categorie,image,description
 };
 
 export const updateCourse =  (id,titre, dateDeb, dateFin, categorie,image,description) => (dispatch) => {
+  Alert.info('Mise à jour en cours...', {
+    position: 'bottom-left',
+    effect: 'stackslide',
+    timeout: 'none'});
+    
   const headers = new Headers();
   headers.append('Content-Type', 'multipart/form-data');
   
@@ -373,6 +384,19 @@ export const addCourse = (course) => ({
   payload: course
 });
 
+export const addCourseByKey = (course) => ({
+  type: ActionTypes.ADD_COURSE_BY_KEY,
+  payload: course
+});
+
+export const courseLoadingByKey = () => ({
+  type: ActionTypes.LOADING_COURSE_BY_KEY
+});
+export const courseFailedByKey = (errmess) => ({
+  type: ActionTypes.FAILED_COURSE_BY_KEY,
+  payload: errmess
+});
+
 export const subscriptionLoading = () => ({
   type: ActionTypes.LOADING_SUBSCRIBE
 });
@@ -403,6 +427,27 @@ export const getAllCourses = () => (dispatch) => {
       }
     })
     .catch(error => dispatch(courseFailed(error.message)));
+    
+}
+
+export const getCoursesByKeyWord= (keyword) => (dispatch) => {
+  
+  dispatch(courseLoadingByKey());
+
+  return axios.get(service_cours_baseUrl+"courses/"+keyword)
+  .then((response) => {
+      if(response){
+        dispatch(addCourseByKey(response.data));
+        
+        return response.data;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    })
+    .catch(error => dispatch(courseFailedByKey(error.message)));
     
 }
 

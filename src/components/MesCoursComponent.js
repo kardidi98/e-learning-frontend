@@ -124,6 +124,7 @@ export default class MesCours extends React.Component {
                 </div>
             );
         }
+        
         else {
             return (
                 <main >

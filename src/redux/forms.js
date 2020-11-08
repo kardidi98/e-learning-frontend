@@ -1,3 +1,7 @@
+let keyword = ""
+if(localStorage.getItem("keyword")){
+     keyword = localStorage.getItem("keyword")
+}
 export const InitialUserRegister = {
     id: "",
     email: "",
@@ -24,3 +28,7 @@ export const InitialCours = {
     categorie: "",
     description: "",
 };
+
+export const KeywordForm = {
+    key : keyword
+}

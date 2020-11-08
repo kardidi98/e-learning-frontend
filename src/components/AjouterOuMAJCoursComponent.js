@@ -125,7 +125,7 @@ export default class AjouterOuMAJCours extends React.Component{
                                                                     <option value="AI">AI</option>
                                                                     <option value="BI">BI</option>
                                                                     <option value="Langues">Langues</option>
-                                                                    <option value="Langues">DevOps</option>
+                                                                    <option value="Devops">DevOps</option>
                                                                 </Control.select>
                                               
                                                         </div>

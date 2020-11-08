@@ -6,21 +6,24 @@ import { Etudiants } from './Etudiants';
 import { Cours } from './cours';
 import { Professeurs } from './Professeurs';
 import { Images } from './Images';
+import {RechercheCours} from "./ResultatRecherche";
 import { Subscription } from './Subscription';
-import { InitialUserRegister,InitialCours,InitialUserLogin } from './forms';
+import { InitialUserRegister,InitialCours,InitialUserLogin, KeywordForm } from './forms';
 
 export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
             etudiants: Etudiants,
             cours: Cours,
+            resultatRechercheCours: RechercheCours,
             professeurs: Professeurs,
             images: Images,
             subscription: Subscription,
             ...createForms({
                 user: InitialUserRegister,
                 login: InitialUserLogin,
-                course: InitialCours
+                course: InitialCours,
+                keyword: KeywordForm
             })
         }),
         applyMiddleware(thunk, logger)

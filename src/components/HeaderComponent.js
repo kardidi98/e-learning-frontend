@@ -7,6 +7,11 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import SearchIcon from '@material-ui/icons/Search';
 import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import {Form, Control } from 'react-redux-form';
+import { IconButton } from '@material-ui/core';
+const createHistory = require("history").createBrowserHistory;
+
+let history = createHistory();
 
 
 export default class Header extends React.Component {
@@ -17,6 +22,7 @@ export default class Header extends React.Component {
             authority:'',
         }
         this.logOut = this.logOut.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount(){
         if(localStorage.getItem("username") && localStorage.getItem("authority")){
@@ -30,6 +36,16 @@ export default class Header extends React.Component {
     }
     logOut(){
         this.props.logout();
+    }
+
+    handleSubmit = (values) =>{
+        this.props.getCoursesByKeyWord(values.key);
+        localStorage.setItem("keyword", values.key);
+        setTimeout(()=> 
+            window.location.reload(false),
+            history.push('/recherchecours')
+        ,100);
+
     }
     render() {
         return (
@@ -76,7 +92,7 @@ export default class Header extends React.Component {
                                                             </Link>
                                                         </li>
                                                         <li className='dropdown'>
-                                                            <Link style={{textDecoration: 'none'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                            <Link to="" style={{textDecoration: 'none'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 {this.state.username} 
                                                                 <span className="caret"></span>
                                                             </Link>
@@ -130,12 +146,12 @@ export default class Header extends React.Component {
                                         </div>
 
                                         <div className="header-search d-none d-lg-block d-flex">
-                                            <form action="#" className="form-box f-right ">
-                                                <input type="text" name="Search" placeholder="Chercher Des Cours ..." />
+                                            <Form onSubmit={(values)=> this.handleSubmit(values)} className="form-box f-right " model="keyword">
+                                                <Control.text model=".key" name="Search" placeholder="Chercher Des Cours ..." required/>
                                                 <div className="search-icon">
-                                                    <SearchIcon/>
+                                                    <div className="search-icon-iconbutton-link" ><IconButton type="submit" className="search-icon-iconbutton"><SearchIcon/></IconButton></div>
                                                 </div>
-                                            </form>
+                                            </Form>
 
                                         </div>
                                     </div>

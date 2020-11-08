@@ -79,7 +79,7 @@ export default class Footer extends React.Component{
                             <div className="col-lg-12">
                                 <div className="footer-copy-right text-center">
                                     <p style={{textAlign: "center"}}>
-                                    Copyright &copy;{year} All rights reserved | E-Learning </p>
+                                    Copyright &copy;{year} Tous les droits sont réservés | E-Learning </p>
                                 </div>
                             </div>
                         </div>
