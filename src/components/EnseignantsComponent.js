@@ -9,14 +9,14 @@ function RenderProf({ prof, image }) {
     return (
 
 
-        <div className="col-lg-3 col-md-6 col-sm-6">
+        <div className="col-lg-4 col-md-6 col-sm-6">
             <div className="single-team mb-30">
                 <div className="team-img">
                     <Image src={"data:image/*;base64," + image.data} alt={prof.id} width="100%" height="100%" />
 
                 </div>
                 <div className="team-caption" >
-                    <h3><a href="instructor.html">{prof.nom + ' ' + prof.prenom}</a></h3>
+                    <h3><a href="#enseignant">{prof.nom + ' ' + prof.prenom}</a></h3>
                     <p style={{ textAlign: "center" }}>Enseignant</p>
                 </div>
             </div>

@@ -13,6 +13,12 @@ let history = createHistory();
 
 
 export const postUser = (email, password, role, nom, prenom, adresse, tel,image) => (dispatch) => {
+  
+  Alert.info('En cours d\'inscription...', {
+    position: 'bottom-left',
+    effect: 'stackslide',
+    timeout: 'none'});
+
   const headers = new Headers();
   headers.append('Content-Type', 'multipart/form-data');
   
@@ -263,6 +269,12 @@ export const getAllStudents = () => (dispatch) => {
           Partie Cours
 *********************************/
 export const postCourse =  (titre, dateDeb, dateFin, categorie,image,description) => (dispatch) => {
+  
+  Alert.info('En cours d\'ajout...', {
+    position: 'bottom-left',
+    effect: 'stackslide',
+    timeout: 'none'});
+
   const headers = new Headers();
   headers.append('Content-Type', 'multipart/form-data');
   

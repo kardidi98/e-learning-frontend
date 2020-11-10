@@ -44,7 +44,7 @@ function RenderCours({ cours, prof, image, subscribe,unsubscribe, inscription, c
             <div className="single-course mb-40">
                 <div className="course-img">
                    
-                            <Image src={"data:image/*;base64," + image.data} alt={cours.nom} width="100%" height="100%" />
+                    <Image src={"data:image/*;base64," + image.data} alt={cours.nom} width="100%" height="100%" />
                             
                 </div>
                 <div className="course-caption">
@@ -66,7 +66,7 @@ function RenderCours({ cours, prof, image, subscribe,unsubscribe, inscription, c
                             <li>{cours.description}.</li>
                         </ul>
                         <ul>
-                            <li><strong>Par: </strong><a href="#link">{prof.nom + ' ' + prof.prenom + '.'}</a></li>
+                            <li><strong>Par: </strong><a href="#enseignant">{prof.nom + ' ' + prof.prenom + '.'}</a></li>
                         </ul>
 
                     </div>
