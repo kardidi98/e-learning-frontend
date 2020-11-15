@@ -34,7 +34,7 @@ export const postUser = (email, password, role, nom, prenom, adresse, tel,image)
 
 
   const formData = new FormData();
-  if(image.length > 0){
+  if(image){
     formData.append('image',image[0]);
   }
   

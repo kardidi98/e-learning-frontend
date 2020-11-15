@@ -71,8 +71,8 @@ export default class Profile extends React.Component {
                         <div  className="  container justify-content-center " style={{ textAlign: "center", width: "250px", height: "50%" }}>
                             {
                                 this.props.image.data ?
-                                    <Image style={{ boxShadow: "0 0 15px rgba(0,0,0,0.3)" }}
-                                        src={"data:image/*;base64," + this.props.image.data} alt={this.props.user.nom} roundedCircle fluid />
+                                    <Image style={{ boxShadow: "0 0 15px rgba(0,0,0,0.3)", height:250, width: 250 }}
+                                        src={"data:image/*;base64," + this.props.image.data} alt={this.props.user.nom} roundedCircle  />
                                     :
                                     <Image style={{ boxShadow: "0 0 15px rgba(0,0,0,0.3)" }}
                                         src="assets/img/logo/user_icon.png" alt={this.props.user.nom} roundedCircle fluid />
