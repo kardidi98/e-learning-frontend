@@ -14,7 +14,6 @@ import { Container } from '@material-ui/core';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import DocumentEtudiantsInscrits from "./pdf/pdfListEtudiants";
 
-
 export default class EtudiantsInscrits extends React.Component {
 
     constructor(props) {
@@ -41,9 +40,9 @@ export default class EtudiantsInscrits extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <h4>{this.props.cours.errMess}</h4>
-                            <h4>{this.props.etudiants.errMess}</h4>
-                            <h4>{this.props.subscription.errMess}</h4>
+                            <h4>{this.props.coursFailed}</h4>
+                            <h4>{this.props.etudiantsFailed}</h4>
+                            <h4>{this.props.inscriptionFailed}</h4>
                         </div>
                     </div>
                 </div>

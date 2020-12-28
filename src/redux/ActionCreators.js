@@ -39,7 +39,7 @@ export const postUser = (email, password, role, nom, prenom, adresse, tel,image)
   }
   
   formData.append('utilisateur', new Blob([JSON.stringify(newUser)], { type: "application/json" }));
-  return axios.post(service_utilisateur_baseUrl+"users/signup",formData,headers)
+  return axios.post(service_utilisateur_baseUrl+"signup",formData,headers)
   .then((response)=>{
     
     if(response.data === "User is added successfully."){
@@ -98,7 +98,7 @@ export const updateUser = (id,email,role, nom, prenom, adresse, tel,image) => (d
     formData.append('image',image[0]);
   }
   formData.append('utilisateur', new Blob([JSON.stringify(updatedUser)], { type: "application/json" }));
-  return axios.put(service_utilisateur_baseUrl+"users/update/"+id,formData,headers)
+  return axios.put(service_utilisateur_baseUrl+"update/"+id,formData,headers)
   .then((response)=>{
     
     if(response.data === "MAJ réussie."){
@@ -135,7 +135,7 @@ export const loginUser = (email, password) => (dispatch) => {
   };
 
 
-  return axios.post(service_utilisateur_baseUrl+"users/login",User,headers)
+  return axios.post(service_utilisateur_baseUrl+"login",User,headers)
   .then((response)=>{
      if(response.data === "dosen't exist."){
       Alert.error('Email inconnu ! Essayez de s\'enregistrer si vous n\'avez pas de compte.', {
@@ -222,7 +222,7 @@ export const getAllProfessors = () => (dispatch) => {
 
   dispatch(profLoading());
 
-  return axios.get(service_utilisateur_baseUrl+"users/professors")
+  return axios.get(service_utilisateur_baseUrl+"professors")
   .then((response) => {
       if(response){
         dispatch(addProf(response.data));
@@ -245,7 +245,7 @@ export const getAllStudents = () => (dispatch) => {
 
   dispatch(studentsLoading());
 
-  return axios.get(service_utilisateur_baseUrl+"users/students")
+  return axios.get(service_utilisateur_baseUrl+"students")
   .then((response) => {
       if(response){
         dispatch(addStudents(response.data));
@@ -297,7 +297,7 @@ export const postCourse =  (titre, dateDeb, dateFin, categorie,image,description
   formData.append('cours', new Blob([JSON.stringify(newCourse)], { type: "application/json" }));
   formData.append('professeur', localStorage.getItem("username"));
 
-  return axios.post(service_cours_baseUrl+"courses/add",formData,headers)
+  return axios.post(service_cours_baseUrl+"add",formData,headers)
   .then((response)=>{
     
     if(response.data === "Course added"){
@@ -355,7 +355,7 @@ export const updateCourse =  (id,titre, dateDeb, dateFin, categorie,image,descri
   formData.append('cours', new Blob([JSON.stringify(updatedCourse)], { type: "application/json" }));
   formData.append('professeur', localStorage.getItem("username"));
 
-  return axios.put(service_cours_baseUrl+"courses/update/"+id,formData,headers)
+  return axios.put(service_cours_baseUrl+"update/"+id,formData,headers)
   .then((response)=>{
     
     if(response.data === "MAJ réussie"){
@@ -426,7 +426,7 @@ export const getAllCourses = () => (dispatch) => {
   
   dispatch(courseLoading());
 
-  return axios.get(service_cours_baseUrl+"courses/All")
+  return axios.get(service_cours_baseUrl+"All")
   .then((response) => {
       if(response){
         dispatch(addCourse(response.data));
@@ -446,7 +446,7 @@ export const getCoursesByKeyWord= (keyword) => (dispatch) => {
   
   dispatch(courseLoadingByKey());
 
-  return axios.get(service_cours_baseUrl+"courses/"+keyword)
+  return axios.get(service_cours_baseUrl+""+keyword)
   .then((response) => {
       if(response){
         dispatch(addCourseByKey(response.data));
@@ -466,7 +466,7 @@ export const getCoursesByKeyWord= (keyword) => (dispatch) => {
 export const deleteCourse = (id) => (dispatch) => {
 
   if (window.confirm("Etes-vous sûre de vouloir supprimer ce cours ?")) {
-    return axios.delete(service_cours_baseUrl+"courses/delete/"+id)
+    return axios.delete(service_cours_baseUrl+"delete/"+id)
     .then((response) => {
         if(response){
           Alert.success('Cours supprimé avec succès.', {
@@ -500,7 +500,7 @@ export const deleteCourse = (id) => (dispatch) => {
 export const subscribe = (id) => (dispatch) => {
 
   
-    return axios.post(service_cours_baseUrl+"courses/subscribe/"+localStorage.getItem("username")+"/"+id)
+    return axios.post(service_cours_baseUrl+"subscribe/"+localStorage.getItem("username")+"/"+id)
     .then((response) => {
         if(response.data === "Inscription réussie"){
           Alert.success('Vous êtes maintenant inscrit dans ce cours.', {
@@ -535,7 +535,7 @@ export const unsubscribe = (id) => (dispatch) => {
 
   if (window.confirm("Etes-vous sûre de vouloir se désinscrire de ce cours ?")) {
 
-    return axios.delete(service_cours_baseUrl+"courses/unsubscribe/"+localStorage.getItem("username")+"/"+id)
+    return axios.delete(service_cours_baseUrl+"unsubscribe/"+localStorage.getItem("username")+"/"+id)
     .then((response) => {
         if(response.data === "Desinscription réussie"){
           Alert.success('Désinscription réussie.', {
@@ -569,7 +569,7 @@ export const getSubscriptions = () => (dispatch) => {
   
   dispatch(subscriptionLoading());
 
-  return axios.get(service_cours_baseUrl+"courses/inscription/All")
+  return axios.get(service_cours_baseUrl+"inscription/All")
   .then((response) => {
       if(response){
         
@@ -608,7 +608,7 @@ export const getImages = () => (dispatch) => {
 
   dispatch(imageLoading());
 
-  return axios.get(service_image_baseUrl+"images/All")
+  return axios.get(service_image_baseUrl+"All")
   .then((response) => {
       if(response){
         dispatch(addImage(response.data));

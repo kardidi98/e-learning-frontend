@@ -69,8 +69,8 @@ export default class Enseignants extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <h4>{this.props.professeurs.errMess}</h4>
-                            <h4>{this.props.image.errMess}</h4>
+                            <h4>{this.props.profFailed}</h4>
+                            <h4>{this.props.imageFailed}</h4>
                         </div>
                     </div>
                 </div>
@@ -79,12 +79,12 @@ export default class Enseignants extends React.Component {
         else {
             return (
                 <main >
-                    <div class="slider-area ">
-                        <div class="slider-height2 d-flex align-items-center">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xl-12">
-                                        <div class="hero-cap hero-cap2 text-center">
+                    <div className="slider-area ">
+                        <div className="slider-height2 d-flex align-items-center">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-xl-12">
+                                        <div className="hero-cap hero-cap2 text-center">
                                             <h2>Enseignants</h2>
                                         </div>
                                     </div>
@@ -102,7 +102,7 @@ export default class Enseignants extends React.Component {
                                         <div className="row nav nav-tabs" id="nav-tab" role="tablist" style={{ paddingBottom: 20, justifyContent: "center" }}>
 
                                             <div className="mt-10 col-lg-4" >
-                                                <input type="text" name="enseignant" placeholder="Charcher un enseignant par nom .." onChange={this.handleChange}
+                                                <input type="text" id="enseignant" name="enseignant" placeholder="Charcher un enseignant par nom .." onChange={this.handleChange}
                                                     className="form-control" style={{ boxShadow: "0 0 10px rgba(0,0,0,0.3)", borderRadius: 3 }} />
                                             </div>
 
@@ -113,15 +113,15 @@ export default class Enseignants extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div class="team-area container ">
-                            <div class="container">
-                                <div class="row" style={{ width: "100%" }}>
+                        <div className="team-area container ">
+                            <div className="container">
+                                <div className="row" style={{ width: "100%" }}>
 
                                     {
                                         this.state.professeurs.length > 0 ?
                                             this.state.professeurs.map((item) => {
                                                 return (
-                                                    <RenderProf prof={item}
+                                                    <RenderProf key={item.email} prof={item}
                                                         image={this.props.images.images.filter((img) => parseInt(img.id) === parseInt(item.idimage))[0]}
                                                     />
                                                 );

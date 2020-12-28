@@ -156,6 +156,7 @@ const mapDispatchToProps = dispatch => ({
                        imageLoading = {this.props.images.isLoading}
                        imageFailed = {this.props.images.errMess}
                        subscribe={this.props.subscribe}
+                       role={this.state.authority}
                 />
               );
             };

@@ -30,10 +30,10 @@ export default class AjouterOuMAJCours extends React.Component{
     }
 
     handleSubmit = (values) =>{
+       
         if(values.image){
             this.props.postCourse(values.nom, values.dateDeb, values.dateFin, values.categorie,values.image,values.description);
             this.props.resetCourseForm();
-          
         }
         else{
             this.setState({
@@ -42,10 +42,10 @@ export default class AjouterOuMAJCours extends React.Component{
            
         }
         
-        
     }
     handleUpdate = (values) =>{
         this.props.updateCourse(values.id, values.nom, values.dateDeb, values.dateFin, values.categorie,values.image,values.description);
+        alert("updated successfully")
     }
     
     handleChangeImage = (e) =>{
@@ -93,7 +93,7 @@ export default class AjouterOuMAJCours extends React.Component{
                             </div>
                            
                             <div className="col-lg-12">
-                                <Form className="form "  id="Form" model="course" onSubmit={cours.length === 0 ? ((values)=> this.handleSubmit(values)) : ((values)=> this.handleUpdate(values))}>
+                                <Form className="form "  id="Form_Cours" model="course" onSubmit={cours.length === 0 ? ((values)=> this.handleSubmit(values)) : ((values)=> this.handleUpdate(values))}>
                                     <div className="row">
                                         
                                         <div className="col-sm-6">
@@ -142,7 +142,7 @@ export default class AjouterOuMAJCours extends React.Component{
                                                         </div>
                                                     </label>
                                                     <Control.file className="form-control " model=".image"  onChange={this.handleChangeImage}
-                                                      name="image" id="image" accept="image/*" hidden="true"/>
+                                                      name="image" id="image" accept="image/*" hidden={true}/>
                                                     {
                                                         image.length === 0? 
                                                         

@@ -10,14 +10,14 @@ import { Button, Container, Typography } from '@material-ui/core';
 let categorie = "all";
 let enseignant = "";
 
-function RenderUserActionByRole({cours,subscribe,unsubscribe, inscription}){
-    if(localStorage.getItem("authority") === null){     
+ function RenderUserActionByRole({cours,subscribe,unsubscribe, inscription, role}){
+    if(role === null){     
         return(
             <Link  to="/connexion" className="btn genric-btn primary-border">S'inscrire</Link>
         )                  
    }
     
-    else if(localStorage.getItem("authority") === "ROLE_ETUDIANT"){
+    else if(role === "ROLE_ETUDIANT"){
         if(inscription){
             return (
                 <Button onClick={unsubscribe.bind(this,cours.id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
@@ -36,7 +36,7 @@ function RenderUserActionByRole({cours,subscribe,unsubscribe, inscription}){
     return null;
 }
 
-function RenderCours({ cours, prof, image, subscribe,unsubscribe, inscription, countSubscriptions }) {
+function RenderCours({ cours, prof, image, subscribe,unsubscribe, inscription, countSubscriptions, role }) {
     
     return (
 
@@ -73,7 +73,7 @@ function RenderCours({ cours, prof, image, subscribe,unsubscribe, inscription, c
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="browse-btn2 text-center mt-50">
-                               <RenderUserActionByRole cours={cours} subscribe={subscribe} unsubscribe={unsubscribe} inscription={inscription} />
+                               <RenderUserActionByRole cours={cours} subscribe={subscribe} unsubscribe={unsubscribe} inscription={inscription} role={role}/>
                             </div>
                         </div>
                     </div>
@@ -93,13 +93,13 @@ export default class Cours extends React.Component {
         super(props);
         this.state = {
             cours: this.props.cours.cours,
-
+            
         }
     }
 
     handleChange = (e) => {
         let cours = this.props.cours.cours;
-        let professeur = [];
+        let professeur;
 
         const target = e.target;
         const value = target.value;
@@ -151,10 +151,10 @@ export default class Cours extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <h4>{this.props.cours.errMess}</h4>
-                            <h4>{this.props.professeurs.errMess}</h4>
-                            <h4>{this.props.image.errMess}</h4>
-                            <h4>{this.props.subscription.errMess}</h4>
+                            <h4>{this.props.courseFailed}</h4>
+                            <h4>{this.props.profFailed}</h4>
+                            <h4>{this.props.imageFailed}</h4>
+                            <h4>{this.props.inscriptionFailed}</h4>
                         </div>
                     </div>
                 </div>
@@ -223,13 +223,14 @@ export default class Cours extends React.Component {
                                                             
                                                             return (
 
-                                                                <RenderCours cours={item}
+                                                                <RenderCours key={item.id} cours={item}
                                                                     prof={this.props.professeurs.professeurs.filter((p) => parseInt(p.iduser) === parseInt(item.professeurId))[0]}
                                                                     image={this.props.images.images.filter((img) => parseInt(img.id) === parseInt(item.imageId))[0]}
                                                                     subscribe={this.props.subscribe}
                                                                     unsubscribe={this.props.unsubscribe}
                                                                     inscription={this.props.inscriptions.filter((SubItem) => SubItem.courId.id === item.id )[0]}
                                                                     countSubscriptions={this.props.totalSubscription.filter((SubItem) => SubItem.courId.id === item.id).length}
+                                                                    role={this.props.role}
                                                                 />
                                                             );
                                                         })

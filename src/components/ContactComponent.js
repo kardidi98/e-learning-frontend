@@ -2,7 +2,7 @@ import React from 'react';
 import TabletAndroidOutlinedIcon from '@material-ui/icons/TabletAndroidOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 
-export default class Header extends React.Component{
+export default class Contact extends React.Component{
     render(){
         return(
     <main>

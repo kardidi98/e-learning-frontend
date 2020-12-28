@@ -14,11 +14,13 @@ export default class Inscription extends React.Component{
     }
     
     handleSubmit(values) {
-        
+       
          this.props.postUser(values.email, values.password,
          values.role, values.nom, values.prenom, values.adresse,
          values.tel, values.image);
          this.props.resetUserForm();
+
+         alert("register succeeded")
     }
 
     render(){

@@ -14,6 +14,7 @@ export default class Login extends React.Component{
         
         this.props.loginUser(values.email,values.password);
         this.props.resetUserLoginForm()
+        alert("login success")
         // event.preventDefault();
     }
     render(){
