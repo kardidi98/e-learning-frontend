@@ -14,7 +14,7 @@ export default class Login extends React.Component{
         
         this.props.loginUser(values.email,values.password);
         this.props.resetUserLoginForm()
-        alert("login success")
+        // alert("login success")
         // event.preventDefault();
     }
     render(){
@@ -41,14 +41,14 @@ export default class Login extends React.Component{
                             <h2 className="contact-title" align="center">Formulaire de connexion</h2>
                         </div>
                         <div className="col-lg-12">
-                            <Form className="form form_form" model="login"
+                            <Form className="form form_form" id="loginForm" model="login"
                                 onSubmit={(values) => this.handleSubmit(values)}>
                                 <div className="row">
                                     
                                     <div className="col-sm-12">
                                         <div className="form-group">
                                             <Control.text className="form-control "  model=".email"
-                                            name="email" id="email" type="email"  placeholder="Email"
+                                            name="email" id="loginEmail" type="email"  placeholder="Email"
                                             required/>
                                         
                                         </div>
@@ -58,7 +58,7 @@ export default class Login extends React.Component{
                                     <div className="col-sm-12">
                                         <div className="form-group">
                                             <Control.text className="form-control "  model=".password"
-                                            name="password" id="password" type="password"  placeholder="Mot de passe"
+                                            name="password" id="loginPassword" type="password"  placeholder="Mot de passe"
                                             required/>
                                         
                                         </div>
@@ -66,7 +66,7 @@ export default class Login extends React.Component{
                                    
                                 </div>
                                 <div className="form-group mt-3"  style={{textAlign: "center"}}>
-                                    <button type="submit" className="button button-contactForm boxed-btn">connexion</button>
+                                    <button type="submit" id="login_Submit" className="button button-contactForm boxed-btn">connexion</button>
                                 </div>
                                 <hr/>
                                 <div className="col-sm-12">

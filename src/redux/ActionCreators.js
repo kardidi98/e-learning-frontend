@@ -48,7 +48,7 @@ export const postUser = (email, password, role, nom, prenom, adresse, tel,image)
           position: 'bottom-left',
           effect: 'stackslide',
           timeout: 'none'});
-
+        // alert("Inscription réussie.")
         setTimeout(()=>{
           history.push('/connexion');
           window.location.reload(false)
@@ -56,10 +56,11 @@ export const postUser = (email, password, role, nom, prenom, adresse, tel,image)
       return response
     }
     else{
-      Alert.error('Email existe déjà ! Réssayez avec un autre. ', {
+      Alert.error('Email existe déjà ! Réssayez avec un autre.', {
         position: 'bottom-left',
         effect: 'stackslide',
         timeout: 'none'});
+      alert("Email existe déjà ! Réssayez avec un autre.")
     }
     
   })
@@ -507,6 +508,8 @@ export const subscribe = (id) => (dispatch) => {
             position: 'bottom-left',
             effect: 'stackslide',
             timeout: 'none'});
+
+          // alert("Vous êtes maintenant inscrit dans ce cours.")
 
           setTimeout(()=>{
             history.push('/coursinscrits');

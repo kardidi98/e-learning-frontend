@@ -36,6 +36,7 @@ export default class AjouterOuMAJCours extends React.Component{
             this.props.resetCourseForm();
         }
         else{
+            // alert("Image Obligatoire")
             this.setState({
                 showError: "true"
             })
@@ -45,7 +46,7 @@ export default class AjouterOuMAJCours extends React.Component{
     }
     handleUpdate = (values) =>{
         this.props.updateCourse(values.id, values.nom, values.dateDeb, values.dateFin, values.categorie,values.image,values.description);
-        alert("updated successfully")
+        // alert("updated successfully")
     }
     
     handleChangeImage = (e) =>{
@@ -101,14 +102,14 @@ export default class AjouterOuMAJCours extends React.Component{
                                                 <Control.text className="form-control "  model=".id"  name="id" id="id" type="text"/>
                                             </div>
                                             <div className="form-group">
-                                                <Control.text className="form-control "  model=".nom" name="nom" id="nom" type="text"  placeholder="Titre du cours" required/>
+                                                <Control.text className="form-control "  model=".nom" name="nom" id="nomCours" type="text"  placeholder="Titre du cours" required/>
                                             </div>
                                             <div className="row">
                                                 <div className="col-sm-6 form-group">
-                                                    <Control.text className="form-control "  model=".dateDeb" name="dateDeb" id="edateDeb" type="date"  placeholder="Date Début" required/>
+                                                    <Control.text className="form-control "  model=".dateDeb" name="dateDeb" id="dateDebCours" type="date"  placeholder="Date Début" required/>
                                                 </div>
                                                 <div className="col-sm-6 form-group">
-                                                    <Control.text className="form-control"  model=".dateFin" name="dateFin" id="dateFin" type="date"  placeholder="Date Fin" required/>
+                                                    <Control.text className="form-control"  model=".dateFin" name="dateFin" id="dateFinCours" type="date"  placeholder="Date Fin" required/>
                                                 </div>
                                             </div>
                                             <div className="row">
@@ -116,7 +117,7 @@ export default class AjouterOuMAJCours extends React.Component{
                                                 <div className="col-sm-6 form-group">
                                                         <div id="default-select">
                                                             
-                                                                <Control.select  className="form-control"   model=".categorie" name="categorie" id="categorie"
+                                                                <Control.select  className="form-control"   model=".categorie" name="categorie" id="categorieCours"
                                                                       required>
                                                                     <option value="">Choisir la catégorie</option>
                                                                     <option value="Marketing">Marketing</option>
@@ -142,7 +143,7 @@ export default class AjouterOuMAJCours extends React.Component{
                                                         </div>
                                                     </label>
                                                     <Control.file className="form-control " model=".image"  onChange={this.handleChangeImage}
-                                                      name="image" id="image" accept="image/*" hidden={true}/>
+                                                      name="image" id="imageCours" accept="image/*" hidden={true}/>
                                                     {
                                                         image.length === 0? 
                                                         
@@ -166,14 +167,14 @@ export default class AjouterOuMAJCours extends React.Component{
                                         </div>
                                         <div className="col-sm-6">
                                             <div className="form-group">
-                                                <Control.textarea className="form-control w-100"  model=".description" name="description" id="description" cols="30" rows="10" o placeholder=" Description" required></Control.textarea>
+                                                <Control.textarea className="form-control w-100"  model=".description" name="description" id="descriptionCours" cols="30" rows="10" o placeholder=" Description" required></Control.textarea>
                                                 
                                             </div>
                                             
                                         </div>
                                     </div>
                                     <div className="form-group mt-3"  style={{textAlign: "center"}}>
-                                        <button type="submit" className="button button-contactForm boxed-btn">Soumettre</button>
+                                        <button type="submit" id="submitCours" className="button button-contactForm boxed-btn">Soumettre</button>
                                     </div>
                                 </Form>
                             </div>

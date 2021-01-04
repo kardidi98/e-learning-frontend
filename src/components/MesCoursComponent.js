@@ -133,8 +133,8 @@ export default class MesCours extends React.Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="col-xl-12">
-                                        <div className="hero-cap hero-cap2 text-center">
-                                            <h2>Mes Cours</h2>
+                                        <div className="hero-cap hero-cap2 text-center ">
+                                            <h2 id="mesCoursTitre">Mes Cours</h2>
                                         </div>
                                     </div>
                                 </div>

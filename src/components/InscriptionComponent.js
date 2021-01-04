@@ -20,7 +20,7 @@ export default class Inscription extends React.Component{
          values.tel, values.image);
          this.props.resetUserForm();
 
-         alert("register succeeded")
+         //alert("register succeeded")
     }
 
     render(){
@@ -54,7 +54,7 @@ export default class Inscription extends React.Component{
                                     <div className="col-sm-6">
                                         <div className="form-group">
                                             <Control.text className="form-control " model=".nom"
-                                            name="nom" id="nom" type="text"  placeholder="Nom"
+                                            name="nom" id="nomRegister" type="text"  placeholder="Nom"
                                              required/>
                                             
                                         </div>
@@ -64,7 +64,7 @@ export default class Inscription extends React.Component{
                                     <div className="col-sm-6">
                                        <div className="form-group">
                                             <Control.text className="form-control "  model=".prenom"
-                                            name="prenom" id="prenom" type="text"  placeholder="Prénom"
+                                            name="prenom" id="prenomRegister" type="text"  placeholder="Prénom"
                                              required/>
                                            
                                         </div>
@@ -72,7 +72,7 @@ export default class Inscription extends React.Component{
                                     <div className="col-sm-6">
                                         <div className="form-group">
                                             <Control.text className="form-control "  model=".email"
-                                             name="email" id="email" type="email"  placeholder="Email"
+                                             name="email" id="emailRegister" type="email"  placeholder="Email"
                                               required/>
                                            
                                         </div>
@@ -82,7 +82,7 @@ export default class Inscription extends React.Component{
                                     <div className="col-sm-6">
                                        <div className="form-group">
                                             <Control.text className="form-control "  model=".password"
-                                             name="password" id="password" type="password"  placeholder="Mot de passe"
+                                             name="password" id="passwordRegister" type="password"  placeholder="Mot de passe"
                                               required/>
                                            
                                         </div>
@@ -90,7 +90,7 @@ export default class Inscription extends React.Component{
                                     <div className="col-sm-12">
                                         <div className="form-group">
                                             <Control.text className="form-control "  model=".tel"
-                                            name="tel" id="tel" type="number"  placeholder="Tél."/>
+                                            name="tel" id="telRegister" type="number"  placeholder="Tél."/>
                                         </div>
                                        
                                         
@@ -98,14 +98,14 @@ export default class Inscription extends React.Component{
                                     <div className="col-sm-12">
                                        <div className="form-group">
                                             <Control.text className="form-control " model=".adresse"
-                                             name="adresse" id="adresse" type="text"  placeholder="Adresse"
+                                             name="adresse" id="adresseRegister" type="text"  placeholder="Adresse"
                                               required/>
                                           
                                         </div>
                                     </div>
                                     <div className="col-sm-12">
                                             <div className="form-group">
-                                                <Control.select model=".role" name="role" defaultValue="ROLE_PROFESSEUR"  required
+                                                <Control.select model=".role" id="roleRegister" name="role" defaultValue="ROLE_ETUDIANT"  required
                                                     className="form-control">
                                                     <option value="ROLE_PROFESSEUR">Enseignant</option>
                                                     <option value="ROLE_ETUDIANT">Etudiant</option>
@@ -123,7 +123,7 @@ export default class Inscription extends React.Component{
                                                     </div>
                                                 </label>
                                                 <Control.file className="form-control " model=".image"
-                                                name="image" id="image" type="file" accept="image/*"  placeholder="Image" hidden="true"/>
+                                                name="image" id="imageRegister" type="file" accept="image/*"  placeholder="Image" hidden="true"/>
                                             </div>
                                     </div>
                                     

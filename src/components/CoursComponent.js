@@ -11,13 +11,8 @@ let categorie = "all";
 let enseignant = "";
 
  function RenderUserActionByRole({cours,subscribe,unsubscribe, inscription, role}){
-    if(role === null){     
-        return(
-            <Link  to="/connexion" className="btn genric-btn primary-border">S'inscrire</Link>
-        )                  
-   }
     
-    else if(role === "ROLE_ETUDIANT"){
+    if(role === "ROLE_ETUDIANT"){
         if(inscription){
             return (
                 <Button onClick={unsubscribe.bind(this,cours.id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
@@ -27,13 +22,19 @@ let enseignant = "";
         }
         else{
             return (
-            <Link onClick={subscribe.bind(this,cours.id )} className="btn genric-btn primary-border">
+            <Link id={"InscriptionBtnLinkAuth"+cours.id } onClick={subscribe.bind(this,cours.id )} className="btn genric-btn primary-border">
                 S'inscrire
             </Link>
             )
         }
     }
-    return null;
+    else { 
+        
+        return(
+            <Link  to="/connexion"  id={"InscriptionBtnLink"+cours.id } className="btn genric-btn primary-border">S'inscrire</Link>
+        )                  
+   }
+    
 }
 
 function RenderCours({ cours, prof, image, subscribe,unsubscribe, inscription, countSubscriptions, role }) {
@@ -99,7 +100,7 @@ export default class Cours extends React.Component {
 
     handleChange = (e) => {
         let cours = this.props.cours.cours;
-        let professeur;
+        let professeur=[];
 
         const target = e.target;
         const value = target.value;

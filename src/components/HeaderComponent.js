@@ -87,7 +87,7 @@ export default class Header extends React.Component {
                                                     this.state.username !== ''?
                                                     <ul className="d-flex align-items-center">
                                                         <li style={{display : this.state.authority === "ROLE_PROFESSEUR" ? "block":"none"}}>
-                                                            <Link to="/ajouterCours" style={{ textDecoration: "none" }} className="genric-btn success-border circle">
+                                                            <Link to="/ajouterCours" id="ajoutCoursBtn" style={{ textDecoration: "none" }} className="genric-btn success-border circle">
                                                                 Ajouter Un Cours
                                                             </Link>
                                                         </li>
@@ -109,8 +109,8 @@ export default class Header extends React.Component {
                                                     </ul>
                                                     :
                                                     <ul>
-                                                        <li ><Link to="/connexion" style={{ textDecoration: "none" }}><PersonOutlinedIcon style={{color: "#4044B4"}}/>Se connecter</Link></li>
-                                                        <li><Link to="/inscription" style={{ textDecoration: "none" }}><LockOutlinedIcon style={{color: "#4044B4"}}/>S'inscrire</Link></li>
+                                                        <li ><Link to="/connexion" id="LienConnexion" style={{ textDecoration: "none" }}><PersonOutlinedIcon style={{color: "#4044B4"}}/>Se connecter</Link></li>
+                                                        <li><Link to="/inscription" id="LienInscription" style={{ textDecoration: "none" }}><LockOutlinedIcon style={{color: "#4044B4"}}/>S'inscrire</Link></li>
                                                     </ul>
                                                     
                                                 }
@@ -137,7 +137,7 @@ export default class Header extends React.Component {
                                             <nav>
                                                 <ul id="navigation">
                                                     <li><Link to="/accueil" style={{ textDecoration: "none" }}>Accueil</Link></li>
-                                                    <li><Link to="/cours" style={{ textDecoration: "none" }}>Cours</Link></li>
+                                                    <li><Link to="/cours" id="coursLink" style={{ textDecoration: "none" }}>Cours</Link></li>
                                                     <li><Link to="/enseignants" style={{ textDecoration: "none" }}>Enseignants</Link></li>
                                                     <li><Link to="/apropos" style={{ textDecoration: "none" }}>A Propos</Link></li>
                                                     <li><Link to="/contact" style={{ textDecoration: "none" }}>Contact</Link></li>
