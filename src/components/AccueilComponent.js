@@ -45,7 +45,7 @@ function RenderCours({ cours, prof, image, subscribe,unsubscribe, inscription, c
                 </div>
                 <div className="course-caption">
                     <div className="course-cap-top d-flex justify-content-between align-items-center">
-                        <h4>{cours.nom}</h4>
+                        <Link to={"/cours/"+cours.id}><h4>{cours.nom}</h4></Link>
                         <small className="align-items-center"><FolderOpenOutlinedIcon style={{color :"#4CD3E3"}}/>&nbsp;{cours.categorie}</small>
                     </div>
                     <div className="course-cap-mid justify-content-between align-items-center">
